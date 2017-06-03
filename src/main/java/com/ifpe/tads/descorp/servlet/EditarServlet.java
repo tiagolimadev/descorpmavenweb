@@ -5,8 +5,17 @@
  */
 package com.ifpe.tads.descorp.servlet;
 
+import com.ifpe.tads.descorp.bean.UsuarioManagedBean;
+import com.ifpe.tads.descorp.model.usuario.Administrador;
+import com.ifpe.tads.descorp.model.usuario.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +27,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditarServlet extends HttpServlet {
 
+    @EJB
+    private UsuarioManagedBean usuarioBean;
+    
+    private Usuario currentUser;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,7 +70,13 @@ public class EditarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        Administrador usuario = (Administrador) usuarioBean.getUsuarioPorCpf(request.getParameter("cpf"));
+        
+        currentUser = usuario;
+        
+        request.setAttribute("usuario", usuario);
+        
     }
 
     /**
@@ -70,7 +90,21 @@ public class EditarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        
+        currentUser.setEmail(request.getParameter("email"));
+        currentUser.setLogin(request.getParameter("login"));
+        currentUser.setSenha(request.getParameter("senha"));
+        
+        try {
+            currentUser.setDataNascimento(df.parse(request.getParameter("dataNasc")));
+        } catch (ParseException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        usuarioBean.editarUsuario(currentUser);
+        
     }
 
     /**

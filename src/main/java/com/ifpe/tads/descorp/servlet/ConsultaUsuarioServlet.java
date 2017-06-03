@@ -6,6 +6,7 @@
 package com.ifpe.tads.descorp.servlet;
 
 import com.ifpe.tads.descorp.bean.UsuarioManagedBean;
+import com.ifpe.tads.descorp.model.usuario.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,11 @@ public class ConsultaUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        if(request.getParameter("excluir") != null){
+            Usuario usuario = usuarioBean.getUsuarioPorCpf(request.getParameter("excluir"));
+            usuarioBean.deletarUsuario(usuario);
+        }
         
         RequestDispatcher rd = request.getRequestDispatcher("/consultarUsuario.jsp");
         rd.forward(request, response);
