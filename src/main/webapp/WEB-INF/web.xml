@@ -13,6 +13,14 @@
         <servlet-name>UsuarioServlet</servlet-name>
         <servlet-class>com.ifpe.tads.descorp.servlet.UsuarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultaUsuarioServlet</servlet-name>
+        <servlet-class>com.ifpe.tads.descorp.servlet.ConsultaUsuarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarServlet</servlet-name>
+        <servlet-class>com.ifpe.tads.descorp.servlet.EditarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -20,6 +28,14 @@
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
         <url-pattern>/UsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaUsuarioServlet</servlet-name>
+        <url-pattern>/ConsultaUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarServlet</servlet-name>
+        <url-pattern>/EditarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

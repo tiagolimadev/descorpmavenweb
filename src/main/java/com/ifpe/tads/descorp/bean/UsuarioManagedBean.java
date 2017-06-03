@@ -11,8 +11,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
+import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -30,5 +32,21 @@ public class UsuarioManagedBean {
         em.persist(usuario);
         
         return true;
+    }
+    
+    public Usuario getUsuarioPorCpf(@NotEmpty String cpf){
+        
+        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.PorCPF", Usuario.class);
+        query.setParameter("cpf", cpf);
+        
+        return query.getSingleResult();
+    }
+    
+    public void editarUsuario(@NotNull @Valid Usuario usuario){
+        em.merge(usuario);
+    }
+    
+    public void deletarUsuario(@NotNull Usuario usuario){
+        em.remove(usuario);
     }
 }
