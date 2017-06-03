@@ -14,7 +14,7 @@
     </head>
     <body>
         <form action="ConsultaUsuarioServlet" method="POST">
-            <input type="text" placeholder="CPF" />
+            <input type="text" placeholder="CPF" name="cpf" />
             <button type="submit">Pesquisar</button>
         </form>
         
@@ -22,7 +22,7 @@
             <div>
                 Nome: ${requestScope['usuario'].nome} </br>
                 CPF: ${requestScope['usuario'].cpf} </br>
-                <a href="EditarUsuarioServlet?cpf=${requestScope['usuario'].cpf}">Editar</a></br>
+                <a href="EditarServlet?cpf=${requestScope['usuario'].cpf}">Editar</a></br>
                 <a href="ConsultaUsuarioServlet?excluir=${requestScope['usuario'].cpf}">Excluir</a></br>
             </div>
         </c:if>

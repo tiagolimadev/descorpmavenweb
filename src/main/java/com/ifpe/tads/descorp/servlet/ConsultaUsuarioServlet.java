@@ -63,7 +63,7 @@ public class ConsultaUsuarioServlet extends HttpServlet {
         
         request.setAttribute("usuario", usuarioBean.getUsuarioPorCpf(cpf));
         
-        RequestDispatcher rd = request.getRequestDispatcher("/ConsultarAdministradorServlet");
+        RequestDispatcher rd = request.getRequestDispatcher("/consultarUsuario.jsp");
         rd.forward(request, response);
         
     }

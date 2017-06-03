@@ -85,7 +85,7 @@ public class UsuarioServlet extends HttpServlet {
         
         Usuario user = new Administrador();
         
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
         user.setCpf(request.getParameter("cpf"));
         try {

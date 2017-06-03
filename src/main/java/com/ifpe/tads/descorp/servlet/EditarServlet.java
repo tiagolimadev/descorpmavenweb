@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +78,9 @@ public class EditarServlet extends HttpServlet {
         
         request.setAttribute("usuario", usuario);
         
+        RequestDispatcher rd = request.getRequestDispatcher("/editarUsuario.jsp");
+        rd.forward(request, response);
+        
     }
 
     /**
@@ -91,11 +95,11 @@ public class EditarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
         currentUser.setEmail(request.getParameter("email"));
         currentUser.setLogin(request.getParameter("login"));
-        currentUser.setSenha(request.getParameter("senha"));
+        currentUser.setNome(request.getParameter("nome"));
         
         try {
             currentUser.setDataNascimento(df.parse(request.getParameter("dataNasc")));
@@ -104,6 +108,9 @@ public class EditarServlet extends HttpServlet {
         }
         
         usuarioBean.editarUsuario(currentUser);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/consultarUsuario.jsp");
+        rd.forward(request, response);
         
     }
 

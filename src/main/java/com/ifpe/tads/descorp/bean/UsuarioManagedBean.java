@@ -6,6 +6,7 @@
 package com.ifpe.tads.descorp.bean;
 
 import com.ifpe.tads.descorp.model.usuario.Usuario;
+import java.io.Serializable;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,8 +23,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Stateless
 @LocalBean
-public class UsuarioManagedBean {
+public class UsuarioManagedBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     private EntityManager em;
 
@@ -47,6 +50,6 @@ public class UsuarioManagedBean {
     }
     
     public void deletarUsuario(@NotNull Usuario usuario){
-        em.remove(usuario);
+        em.remove(em.merge(usuario));
     }
 }
