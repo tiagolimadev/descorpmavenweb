@@ -9,33 +9,9 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>UsuarioServlet</servlet-name>
-        <servlet-class>com.ifpe.tads.descorp.servlet.UsuarioServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ConsultaUsuarioServlet</servlet-name>
-        <servlet-class>com.ifpe.tads.descorp.servlet.ConsultaUsuarioServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditarServlet</servlet-name>
-        <servlet-class>com.ifpe.tads.descorp.servlet.EditarServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UsuarioServlet</servlet-name>
-        <url-pattern>/UsuarioServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ConsultaUsuarioServlet</servlet-name>
-        <url-pattern>/ConsultaUsuarioServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditarServlet</servlet-name>
-        <url-pattern>/EditarServlet</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -43,6 +19,22 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>publico/index.xhtml</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/publico/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/faces/publico/error.xhtml</location>
+    </error-page>    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/publico/error.xhtml</location>
+    </error-page>      
+    <error-page>
+        <exception-type>javax.ejb.EJBAccessException</exception-type>
+        <location>/faces/publico/error.xhtml</location>
+    </error-page> 
 </web-app>

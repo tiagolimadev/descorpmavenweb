@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Aplicação - Login</title>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" defer="defer"></script>  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js" defer="defer"></script>
+    </h:head>
+    <h:body>
+        <h:form id="loginForm">
+            <div class="row">
+                <div class="col s6 m4">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <h:outputLabel for="login">Nome:</h:outputLabel>
+                                <p:inputText id="login" type="text" rendered="true" label="login" value="#{registrarBean.usuario.login}" />
+                            </div>
+                            <div class="row">
+                                <h:outputLabel for="login">:</h:outputLabel>
+                                <p:inputText id="login" type="text" rendered="true" label="login" value="#{registrarBean.login}" />
+                            </div>
+                            <div class="row">
+                                <h:outputLabel for="senha">Senha:</h:outputLabel>
+                                <p:password id="senha" rendered="true" label="senha" value="#{registrarBean.senha}"></p:password>
+                            </div>
+                            <div class="row">
+                                <h:outputLabel for="csenha">Confirmar Senha:</h:outputLabel>
+                                <p:password id="csenha" rendered="true" label="csenha" value="#{registrarBean.senha}"></p:password>
+                            </div>
+                            <p:commandButton action="#{registrarBean.registrar()}" value="Salvar" />
+                            <p:commandButton action="login" immediate="true" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
