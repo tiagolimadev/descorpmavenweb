@@ -120,13 +120,14 @@ public abstract class Usuario implements Serializable {
         Calendar nascimento = new GregorianCalendar();
         nascimento.setTime(this.dataNascimento);
         Calendar hoje = Calendar.getInstance();
-        Integer idade = hoje.get(Calendar.YEAR) - nascimento.get(Calendar.YEAR);
-        nascimento.add(Calendar.YEAR, idade);
+        Integer calcIdade = hoje.get(Calendar.YEAR) - nascimento.get(Calendar.YEAR);
+        nascimento.add(Calendar.YEAR, calcIdade);
 
         if (hoje.before(nascimento)) {
-            idade--;
+            calcIdade--;
         }
-        this.idade = idade;
+        
+        this.idade = calcIdade;
     }
 
     public Long getId() {

@@ -5,17 +5,18 @@
  */
 package com.ifpe.tads.descorp.bean;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import java.io.Serializable;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author Eduardo
  */
-@ManagedBean(name = "loginBean")
+@Named("loginBean")
 @RequestScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
 
     @NotBlank
     private String login;

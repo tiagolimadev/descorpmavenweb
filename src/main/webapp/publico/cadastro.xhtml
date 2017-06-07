@@ -18,20 +18,34 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="row">
-                                <h:outputLabel for="login">Nome:</h:outputLabel>
-                                <p:inputText id="login" type="text" rendered="true" label="login" value="#{registrarBean.usuario.login}" />
+                                <h:outputLabel for="nome">Nome</h:outputLabel>
+                                <p:inputText id="nome" type="text" required="true" label="nome" value="#{registrarBean.cliente.nome}" />
                             </div>
                             <div class="row">
-                                <h:outputLabel for="login">:</h:outputLabel>
-                                <p:inputText id="login" type="text" rendered="true" label="login" value="#{registrarBean.login}" />
+                                <h:outputLabel for="email">Email</h:outputLabel>
+                                <p:inputText id="email" type="email" required="true" label="email" value="#{registrarBean.cliente.email}" />
                             </div>
                             <div class="row">
-                                <h:outputLabel for="senha">Senha:</h:outputLabel>
-                                <p:password id="senha" rendered="true" label="senha" value="#{registrarBean.senha}"></p:password>
+                                <div class="col s6">
+                                    <h:outputLabel for="cpf">CPF</h:outputLabel>
+                                    <p:inputText id="cpf" type="text" required="true" label="cpf" value="#{registrarBean.cliente.cpf}" />
+                                </div>
+                                <div class="col s6">
+                                    <h:outputLabel for="dataNasc">Data Nasc.:</h:outputLabel>
+                                    <p:inputText id="dataNasc" type="date" required="true" label="dataNasc" value="#{registrarBean.cliente.dataNascimento}" />
+                                </div>
                             </div>
                             <div class="row">
-                                <h:outputLabel for="csenha">Confirmar Senha:</h:outputLabel>
-                                <p:password id="csenha" rendered="true" label="csenha" value="#{registrarBean.senha}"></p:password>
+                                <h:outputLabel for="login">Login</h:outputLabel>
+                                <p:inputText id="login" type="text" required="true" label="login" value="#{registrarBean.cliente.login}" />
+                            </div>
+                            <div class="row">
+                                <h:outputLabel for="senha">Senha</h:outputLabel>
+                                <p:password id="senha" required="true" label="senha" value="#{registrarBean.cliente.senha}"></p:password>
+                            </div>
+                            <div class="row">
+                                <h:outputLabel for="csenha">Confirmar Senha</h:outputLabel>
+                                <p:password id="csenha" required="true" label="csenha" value="#{registrarBean.confirmacaoSenha}"></p:password>
                             </div>
                             <p:commandButton action="#{registrarBean.registrar()}" value="Salvar" />
                             <p:commandButton action="login" immediate="true" value="Cancelar" />
