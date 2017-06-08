@@ -7,18 +7,11 @@ package com.ifpe.tads.descorp.bean;
 
 import com.ifpe.tads.descorp.model.usuario.Cliente;
 import com.ifpe.tads.descorp.model.usuario.TipoUsuario;
+import com.ifpe.tads.descorp.servico.UsuarioServico;
 import java.io.Serializable;
-import static javax.annotation.Resource.AuthenticationType.CONTAINER;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -30,8 +23,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @RequestScoped
 public class CadastroBean implements Serializable{
 
-    @PersistenceContext(name = "descorp", type = TRANSACTION)
-    private EntityManager em;
+    @EJB
+    private UsuarioServico usuarioServico;
     
     @Valid
     private Cliente cliente;
@@ -48,7 +41,7 @@ public class CadastroBean implements Serializable{
     public String cadastrarCliente(){
         
         if(cliente.getSenha().equals(confirmacaoSenha)){
-            em.persist(cliente);
+            usuarioServico.salvar(cliente);
         }
         
         return "login";
