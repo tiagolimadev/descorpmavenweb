@@ -6,15 +6,19 @@
 package com.ifpe.tads.descorp.bean;
 
 import java.io.Serializable;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author Eduardo
  */
-@Named("loginBean")
+@ManagedBean(name = "loginBean")
 @RequestScoped
 public class LoginBean implements Serializable {
 
@@ -23,14 +27,34 @@ public class LoginBean implements Serializable {
     
     @NotBlank
     private String senha;
+    private FacesContext facesContext;
     
     public LoginBean() {
     }
     
     public String logar(){
-        return "";
+        String retorno = "";
+        
+        facesContext = FacesContext.getCurrentInstance();
+        
+        try {
+            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            request.login(login, senha);
+            facesContext.getExternalContext().getSession(true);
+            retorno = "sucesso";
+        } catch (ServletException ex) {
+            setLogin(null);
+            adicionarMensagem("Login e/ou senha incorretos.");
+        }
+        
+        return retorno;
     }
 
+    public void adicionarMensagem(String mensagem){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, null);
+        facesContext.addMessage(null, message);
+    }
+    
     public String getLogin() {
         return login;
     }
