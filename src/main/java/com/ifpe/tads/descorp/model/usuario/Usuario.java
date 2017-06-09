@@ -64,6 +64,10 @@ import org.hibernate.validator.constraints.br.CPF;
             @NamedQuery(
                     name = "Usuario.PorTipo",
                     query = "SELECT u FROM Usuario u WHERE u.tipo = :tipo"
+            ),
+            @NamedQuery(
+                    name = "Usuario.listarTodos",
+                    query = "SELECT u FROM Usuario u ORDER BY u.nome"
             )
         }
 )
