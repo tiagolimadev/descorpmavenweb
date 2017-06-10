@@ -7,48 +7,48 @@
     <h:head>
         <title>Aplicação - Login</title>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" />
+        <link rel="stylesheet" href="../css/materialize.min.css" />
         <link rel="stylesheet" href="../css/custom.css" />
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" defer="defer"></script>  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js" defer="defer"></script>
+        <script src="../js/materialize.min.js" defer="defer"></script>
     </h:head>
     <h:body>
         <h:form id="loginForm">
+            <p:growl id="growl" sticky="true" autoUpdate="true"/>
             <div class="row flex-container">
                 <div class="col s6 m4 auto-margin">
                     <div class="card">
                         <div class="card-content">
                             <div class="row">
                                 <h:outputLabel for="nome">Nome</h:outputLabel>
-                                <p:inputText id="nome" type="text" required="true" label="nome" value="#{cadastroBean.cliente.nome}" />
+                                <p:inputText id="nome" type="text" label="nome" value="#{cadastroBean.cliente.nome}" />
                             </div>
                             <div class="row">
                                 <h:outputLabel for="email">Email</h:outputLabel>
-                                <p:inputText id="email" type="email" required="true" label="email" value="#{cadastroBean.cliente.email}" />
+                                <p:inputText id="email" type="email" label="email" value="#{cadastroBean.cliente.email}" />
                             </div>
                             <div class="row">
                                 <div class="col s5">
                                     <h:outputLabel for="cpf">CPF</h:outputLabel>
-                                    <p:inputMask id="cpf" mask="999.999.999-99" required="true" label="cpf" value="#{cadastroBean.cliente.cpf}" />
+                                    <p:inputMask id="cpf" mask="999.999.999-99" label="cpf" value="#{cadastroBean.cliente.cpf}" />
                                 </div>
                                 <div class="col offset-s1 s6">
                                     <h:outputLabel for="dataNasc">Data Nasc.:</h:outputLabel>
-                                    <p:inputText id="dataNasc" type="date" required="true" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}">
+                                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}">
                                         <f:convertDateTime pattern="yyyy-MM-dd" />
                                     </p:inputText>
                                 </div>
                             </div>
                             <div class="row">
                                 <h:outputLabel for="login">Login</h:outputLabel>
-                                <p:inputText id="login" required="true" type="text" label="login" value="#{cadastroBean.cliente.login}" />
+                                <p:inputText id="login" type="text" label="login" value="#{cadastroBean.cliente.login}" />
                             </div>
                             <div class="row">
                                 <h:outputLabel for="senha">Senha</h:outputLabel>
-                                <p:password id="senha" required="true" label="senha" value="#{cadastroBean.cliente.senha}"></p:password>
+                                <p:password id="senha" label="senha" value="#{cadastroBean.cliente.senha}"></p:password>
                             </div>
                             <div class="row">
                                 <h:outputLabel for="csenha">Confirmar Senha</h:outputLabel>
-                                <p:password id="csenha" required="true" label="csenha" value="#{cadastroBean.confirmacaoSenha}"></p:password>
+                                <p:password id="csenha" label="csenha" value="#{cadastroBean.confirmacaoSenha}"></p:password>
                             </div>
                             <p:commandButton action="#{cadastroBean.cadastrarCliente()}" value="Salvar" ajax="false" validateClient="true" />
                             <p:commandButton action="login" immediate="true" value="Cancelar" />

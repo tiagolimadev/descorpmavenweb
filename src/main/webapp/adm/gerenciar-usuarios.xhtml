@@ -7,16 +7,15 @@
     <h:head>
         <title>Aplicação - Login</title>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" />
-        <link rel="stylesheet" href="css/custom.css" />
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" defer="defer"></script>  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js" defer="defer"></script>
+        <link rel="stylesheet" href="../css/materialize.min.css" />
+        <link rel="stylesheet" href="../css/custom.css" />  
+        <script src="../js/materialize.min.js" defer="defer"></script>
     </h:head>
     <h:body>
         <h:form id="usuariosForm">
             
             <div class="row">
-                <p:commandButton action="#{administradorBean.adicionarUsuario()}" value="Adicionar Usuário" update="usuariosForm"/>
+                <p:commandButton  value="Adicionar Usuário" update="usuariosForm"/>
             </div>
             
             <p:dataTable id="listaUsuarios" value="#{administradorBean.listaUsuarios}" var="usuario" rowKey="#{usuario.id}">
@@ -30,9 +29,20 @@
                     <h:outputText value="#{usuario.tipo}" />
                 </p:column>
                 <p:column headerText="Ações">
-                    <p:commandButton action="#{administradorBean.visualizarUsuario()}" value="Visualizar" />
+                    <p:commandButton action="#{administradorBean.initVisualizarUsuario(usuario)}" oncomplete="PF('dlgVisualizar').show();" value="Visualizar" update="usuariosForm" />
                 </p:column>
             </p:dataTable>
+            
+            <p:dialog header="Detalhes" widgetVar="dlgVisualizar" modal="true" closeOnEscape="true" resizable="false">
+                <div>Nome: <h:outputText value="#{administradorBean.usuarioSelecionado.nome}" /></div>
+                <div>CPF: <h:outputText value="#{administradorBean.usuarioSelecionado.cpf}" /></div>
+                <div>Data Nasc.: <h:outputText value="#{administradorBean.usuarioSelecionado.dataNascimento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                 </h:outputText> - Idade: <h:outputText value="#{administradorBean.usuarioSelecionado.idade}" /> anos</div>
+                <div>E-mail: <h:outputText value="#{administradorBean.usuarioSelecionado.email}" /></div>
+                <div>Perfil: <h:outputText value="#{administradorBean.usuarioSelecionado.tipo}" /></div>
+            </p:dialog> 
+            
         </h:form>
     </h:body>
 </html>
