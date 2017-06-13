@@ -43,6 +43,10 @@ import org.hibernate.validator.constraints.NotBlank;
                     name = "Produto.PorCodigo",
                     query = "SELECT p FROM Produto p WHERE p.codigo LIKE :codigo"
             ),
+            @NamedQuery(
+                    name = "Produto.Todos",
+                    query = "SELECT p FROM Produto p"
+            )
         }
 )
 @NamedNativeQueries(

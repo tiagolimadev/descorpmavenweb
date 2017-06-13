@@ -5,7 +5,8 @@
  */
 package com.ifpe.tads.descorp.servico;
 
-import com.ifpe.tads.descorp.model.usuario.Cliente;
+import com.ifpe.tads.descorp.model.produto.Produto;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -15,33 +16,24 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
+import javax.persistence.TypedQuery;
 
 /**
  *
- * @author eduardo.amaral
+ * @author Eduardo
  */
-@Stateless
 @LocalBean
+@Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class ClienteServico {
+public class ProdutoServico {
     
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;
     
-    public Cliente getClientePorId(Long id){
-        return entityManager.find(Cliente.class, 1);
+    public List<Produto> getProdutos(){
+        TypedQuery<Produto> query = entityManager.createNamedQuery("Produto.Todos", Produto.class);
+        return query.getResultList();
     }
     
-    public Cliente getHistorico(Cliente cliente){
-        
-        if(!entityManager.contains(cliente)){
-            entityManager.merge(cliente);
-        }
-        
-        cliente.getVendas();
-        
-        return cliente;
-    }
-
 }

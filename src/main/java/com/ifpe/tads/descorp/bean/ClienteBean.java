@@ -5,11 +5,19 @@
  */
 package com.ifpe.tads.descorp.bean;
 
+import com.ifpe.tads.descorp.excecao.ExcecaoNegocio;
+import com.ifpe.tads.descorp.model.produto.Produto;
 import com.ifpe.tads.descorp.model.usuario.Cliente;
+import com.ifpe.tads.descorp.model.venda.ItemVenda;
 import com.ifpe.tads.descorp.model.venda.Venda;
 import com.ifpe.tads.descorp.servico.ClienteServico;
+import com.ifpe.tads.descorp.servico.ProdutoServico;
+import com.ifpe.tads.descorp.servico.VendaServico;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.validation.Valid;
@@ -20,7 +28,7 @@ import javax.validation.Valid;
  */
 @SessionScoped
 @ManagedBean(name = "clienteBean")
-public class ClienteBean implements Serializable {
+public class ClienteBean extends BasicBean implements Serializable {
     
     @Valid
     private Cliente cliente;
@@ -28,9 +36,26 @@ public class ClienteBean implements Serializable {
     @EJB
     private ClienteServico clienteServico;
     
+    @EJB
+    private ProdutoServico produtoServico;
+    
+    @EJB
+    private VendaServico vendaServico;
+    
+    @Valid
     private Venda vendaSelecionada;
     
-    public ClienteBean() {}
+    @Valid
+    private Venda novaVenda;
+    
+    @Valid
+    private ItemVenda novoItem;
+    
+    private List<Produto> produtosDisponiveis;
+    
+    public ClienteBean() {
+        cliente = clienteServico.getClientePorId(1L);
+    }
     
     public String initHistorico(){
         String resultado = "";
@@ -42,6 +67,35 @@ public class ClienteBean implements Serializable {
         return resultado;
     }
 
+    public String initNovaCompra(){
+        String nav = "nova-compra";
+        
+        novaVenda = new Venda();
+        novaVenda.setCliente(cliente);
+        novaVenda.setItensVenda(new ArrayList<ItemVenda>());
+        
+        produtosDisponiveis = produtoServico.getProdutos();
+        
+        return nav;
+    }
+    
+    public String finalizarCompra(){
+        String nav = "home-cliente";
+        
+        try{
+            vendaServico.finalizarVenda(novaVenda);
+        } catch (ExcecaoNegocio e){
+            nav = "";
+            super.adicionarMessagem(FacesMessage.SEVERITY_WARN, e.getMessage());
+        }
+        
+        return nav;
+    }
+    
+    public void initNovoItem(){
+        novoItem = new ItemVenda();
+    }
+    
     public Cliente getCliente() {
         return cliente;
     }
@@ -58,4 +112,28 @@ public class ClienteBean implements Serializable {
         this.vendaSelecionada = vendaSelecionada;
     }
 
+    public Venda getNovaVenda() {
+        return novaVenda;
+    }
+
+    public void setNovaVenda(Venda novaVenda) {
+        this.novaVenda = novaVenda;
+    }
+
+    public ItemVenda getNovoItem() {
+        return novoItem;
+    }
+
+    public void setNovoItem(ItemVenda novoItem) {
+        this.novoItem = novoItem;
+    }
+
+    public List<Produto> getProdutosDisponiveis() {
+        return produtosDisponiveis;
+    }
+
+    public void setProdutosDisponiveis(List<Produto> produtosDisponiveis) {
+        this.produtosDisponiveis = produtosDisponiveis;
+    }
+    
 }

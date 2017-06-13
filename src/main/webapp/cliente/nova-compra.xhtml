@@ -13,9 +13,18 @@
     </h:head>
     <h:body>
         <h:form id="form">
-            <p:commandButton value="Nova Compra" action="#{clienteBean.initNovaCompra()}" />
-            <p:commandButton value="Histórico de Compras" action="#{clienteBean.initHistorico()}" />
-            <p:commandButton value="Editar Perfil" />
+            
+            <p:commandButton action="#{clienteBean.initNovoItem()}" oncomplete="PF('dlgNovoItem').show()" value="Novo Item" />
+            
+            <p:dataTable>
+                
+            </p:dataTable>
+            
+            <p:dialog>
+                
+                <p:commandButton action="#{clienteBean.adicionarItem()}" />
+            </p:dialog>
+            
         </h:form>
     </h:body>
 </html>
