@@ -29,6 +29,10 @@ import javax.validation.constraints.Size;
         @NamedQuery(
             name = "Categoria.PorNome",
             query = "SELECT c FROM Categoria c WHERE c.nome LIKE :nome ORDER BY c.id"
+        ),
+        @NamedQuery(
+            name = "Categoria.listarCategorias",
+            query = "SELECT c FROM Categoria c ORDER BY c.nome"
         )
     }
 )
