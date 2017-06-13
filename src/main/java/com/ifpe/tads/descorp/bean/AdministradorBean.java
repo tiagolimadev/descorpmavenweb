@@ -26,6 +26,7 @@ public class AdministradorBean implements Serializable {
     private AdministradorServico admServico;
     
     private List<Usuario> listaUsuarios;
+    private Usuario usuarioSelecionado;
     
     @PostConstruct
     public void init(){
@@ -40,8 +41,8 @@ public class AdministradorBean implements Serializable {
         listaUsuarios = admServico.listarUsuarios();
     }
     
-    public void visualizarUsuario(){
-        listaUsuarios = admServico.listarUsuarios();
+    public void initVisualizarUsuario(Usuario usuario){
+        this.usuarioSelecionado = usuario;
     }
     
     public void adicionarUsuario(){
@@ -54,6 +55,14 @@ public class AdministradorBean implements Serializable {
 
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+    }
+
+    public Usuario getUsuarioSelecionado() {
+        return usuarioSelecionado;
+    }
+
+    public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
+        this.usuarioSelecionado = usuarioSelecionado;
     }
     
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Bebidas Ltda.</title>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/materialize.min.css" />
+        <link rel="stylesheet" href="../css/custom.css" />  
+        <script src="../js/materialize.min.js" defer="defer"></script>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:dataTable id="listaUsuarios" value="#{clienteBean.cliente.vendas}" var="venda" rowKey="#{venda.id}" paginator="10">
+                <p:column headerText="Data da Compra" sortBy="#{venda.dataVenda}">
+                    <h:outputText value="#{venda.dataVenda}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Valor Total">
+                    <h:outputText value="#{venda.valorTotal}">
+                        <f:convertNumber type="currency" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Cancelada">
+                    <h:outputText value="#{venda.cancelada}" />
+                </p:column>
+                <p:column>
+                    <p:commandButton update="form" oncomplete="PF('dlgVenda').show()" icon="ui-icon-search" title="Detalhes">
+                        <f:setPropertyActionListener value="#{venda}" target="#{clienteBean.vendaSelecionada}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="Detalhes" widgetVar="dlgVenda" modal="true" closeOnEscape="true" resizable="false" height="400">
+                <p:scrollPanel mode="native">
+                    <div>Cliente: <h:outputText value="#{clienteBean.cliente.nome}" /></div>
+                    <div>Data da Compra: 
+                        <h:outputText value="#{clienteBean.vendaSelecionada.dataVenda}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText></div>
+                    <div>Produtos:</div>
+                    <p:dataTable value="#{clienteBean.vendaSelecionada.itensVenda}" var="item" emptyMessage="Não há entregas cadastradas." paginator="10">
+                        <p:column headerText="Produto">
+                            <h:outputText value="#{item.produto.nome}" />
+                        </p:column>
+                        <p:column headerText="Preço Unitário">
+                            <h:outputText value="#{item.precoUnitario}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{item.quantidade}" />
+                        </p:column>
+                        <p:column headerText="Sub-Total">
+                            <h:outputText value="#{item.subTotal}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{clienteBean.vendaSelecionada.valorTotal}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </f:facet>
+                    </p:dataTable>
+
+                    <div>Entregas:</div>
+                    <p:dataTable value="#{clienteBean.vendaSelecionada.entregas}" var="entrega" emptyMessage="Não há entregas cadastradas.">
+                        <p:column headerText="Data da Entrega">
+                            <h:outputText value="#{entrega.dataEntrega}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Situação">
+                            <h:outputText value="#{entrega.statusEntrega}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:scrollPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

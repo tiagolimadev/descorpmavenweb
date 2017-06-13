@@ -49,5 +49,5 @@
             <to-view-id>/categoria/editar.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-    </navigation-rule>      
+    </navigation-rule>
 </faces-config>

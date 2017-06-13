@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -77,34 +78,35 @@ public abstract class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    //@Pattern(regexp = "^[A-Z].+", message = "O nome deve começar com uma letra maiuscula.")
+    @NotBlank(message = "{usuario.nome.obrigatorio}")
     @Size(max = 100)
     @Column(name = "TXT_NOME")
     private String nome;
 
-    @Email
-    @NotBlank
+    @Email(message = "{usuario.email.invalido}")
+    @NotBlank(message = "{usuario.email.obrigatorio}")
     @Size(max = 100)
     @Column(name = "TXT_EMAIL")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{usuario.login.obrigatorio}")
     @Size(min = 4, max = 12)
     @Column(name = "TXT_LOGIN", unique = true)
     private String login;
 
-    @NotBlank
+    @NotBlank(message = "{usuario.senha.obrigatorio}")
     @Size(min = 8, max = 16)
     @Column(name = "TXT_SENHA")
     private String senha;
 
     @CPF
-    @NotBlank
+    @NotBlank(message = "{usuario.cpf.obrigatorio}")
     @Column(name = "TXT_CPF", unique = true)
     private String cpf;
 
-    @Past
-    @NotNull
+    @Past(message = "ususario.dtnasc.passado")
+    @NotNull(message = "{usuario.dtnasc.obrigatorio}")
     @Column(name = "DT_NASCIMENTO")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
