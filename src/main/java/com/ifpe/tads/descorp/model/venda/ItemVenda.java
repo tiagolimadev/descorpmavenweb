@@ -57,6 +57,10 @@ public class ItemVenda implements Serializable {
         this.subTotal = this.precoUnitario.multiply(new BigDecimal(this.quantidade));
     }
     
+    public void copiarPreco(){
+        this.precoUnitario = this.produto.getPreco();
+    }
+    
     public Long getId() {
         return id;
     }

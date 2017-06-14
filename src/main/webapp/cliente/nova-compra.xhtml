@@ -13,18 +13,50 @@
     </h:head>
     <h:body>
         <h:form id="form">
-            
+
             <p:commandButton action="#{clienteBean.initNovoItem()}" oncomplete="PF('dlgNovoItem').show()" value="Novo Item" />
-            
-            <p:dataTable>
-                
+
+            <p:dataTable value="#{clienteBean.novaVenda.itensVenda}" var="item">
+                <p:column headerText="Produto">
+                    <h:outputText value="#{item.produto.nome}" />
+                </p:column>
+                <p:column headerText="Preço Unitário">
+                    <h:outputText value="#{item.precoUnitario}">
+                        <f:convertNumber type="currency" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Qtde.">
+                    <h:outputText value="#{item.quantidade}" />
+                </p:column>
+                <p:column headerText="Sub-Total">
+                    <h:outputText value="#{item.subTotal}">
+                        <f:convertNumber type="currency" />
+                    </h:outputText>
+                </p:column>
+                <f:facet name="footer">
+                    Total: <h:outputText value="#{clienteBean.novaVenda.valorTotal}">
+                        <f:convertNumber type="currency" />
+                    </h:outputText>
+                </f:facet>
             </p:dataTable>
-            
-            <p:dialog>
-                
-                <p:commandButton action="#{clienteBean.adicionarItem()}" />
+
+            <p:commandButton action="#{clienteBean.finalizarCompra()}" value="Finalizar Compra" />
+
+            <p:dialog id="dlgItem" header="Adicionar Item" widgetVar="dlgNovoItem" modal="true" closeOnEscape="true" resizable="false">
+                <p:growl id="growl" sticky="true" autoUpdate="true"/>
+                <div>
+                    <p:selectOneMenu value="#{clienteBean.novoItem.produto}" converter="produtoConverter">
+                        <f:selectItems value="#{clienteBean.produtosDisponiveis}" var="produto" itemLabel="#{produto.nome - produto.preco}" itemValue="#{produto}" />
+                        <p:ajax update="dlgItem" />
+                    </p:selectOneMenu>
+                </div>
+                <div>Preço: <h:outputText value="#{clienteBean.novoItem.produto.preco}" /></div>
+                <div><p:outputLabel> Quantidade: <p:inputText value="#{clienteBean.novoItem.quantidade}" /> </p:outputLabel></div>
+                <div>
+                    <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').close()" value="Adicionar Produto à compra" />
+                </div>
             </p:dialog>
-            
+
         </h:form>
     </h:body>
 </html>
