@@ -25,7 +25,7 @@
             <from-outcome>cadastrar</from-outcome>
             <to-view-id>/publico/cadastro.xhtml</to-view-id>
             <redirect />
-        </navigation-case>        
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>*</from-view-id>
@@ -34,22 +34,19 @@
             <to-view-id>/index.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/cliente/home-cliente.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>historico-cliente</from-outcome>
-            <to-view-id>/cliente/historico-cliente.xhtml</to-view-id>
+            <from-outcome>cadastrarCategoria</from-outcome>
+            <to-view-id>/categoria/cadastrar.xhtml</to-view-id>
+            <redirect id="listaCategorias"/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listarCategorias</from-outcome>
+            <to-view-id>/categoria/listar.xhtml</to-view-id>
             <redirect />
         </navigation-case>
         <navigation-case>
-            <from-outcome>editar-perfil</from-outcome>
-            <to-view-id>/cliente/editar-perfil.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>        
-        <navigation-case>
-            <from-outcome>nova-compra</from-outcome>
-            <to-view-id>/cliente/nova-compra.xhtml</to-view-id>
+            <from-outcome>editarCategoria</from-outcome>
+            <to-view-id>/categoria/editar.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

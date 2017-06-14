@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>GerenciaWeb | Editar Categoria</title>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" />
+        <link rel="stylesheet" href="../css/custom.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" defer="defer"></script>  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js" defer="defer"></script>
+    </h:head>
+    <h:body>
+        <h:form id="editarCategoriaForm">
+            <div class="row flex-container">
+                <div class="col s6 m4 auto-margin">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <h:outputLabel for="nome" value="Nome" />
+                                <p:inputText id="nome" type="text" required="true" label="nome" value="#{categoriaBean.categoria.nome}" />
+                            </div>
+                            <p:commandButton action="#{categoriaBean.atualizarCategoria(categoria)}" icon="fa fa-fw fa-save" value="Salvar" ajax="false" validateClient="true" />
+                            <p:commandButton action="listarCategorias" immediate="true" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
