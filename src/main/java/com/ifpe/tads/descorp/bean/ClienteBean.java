@@ -12,10 +12,12 @@ import com.ifpe.tads.descorp.model.venda.ItemVenda;
 import com.ifpe.tads.descorp.model.venda.Venda;
 import com.ifpe.tads.descorp.servico.ClienteServico;
 import com.ifpe.tads.descorp.servico.ProdutoServico;
+import com.ifpe.tads.descorp.servico.UsuarioServico;
 import com.ifpe.tads.descorp.servico.VendaServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +32,8 @@ import javax.validation.Valid;
 @ManagedBean(name = "clienteBean")
 public class ClienteBean extends BasicBean implements Serializable {
     
+    
+    
     @Valid
     private Cliente cliente;
 
@@ -42,6 +46,9 @@ public class ClienteBean extends BasicBean implements Serializable {
     @EJB
     private VendaServico vendaServico;
     
+    @EJB
+    private UsuarioServico usuarioServico;
+    
     @Valid
     private Venda vendaSelecionada;
     
@@ -53,9 +60,12 @@ public class ClienteBean extends BasicBean implements Serializable {
     
     private List<Produto> produtosDisponiveis;
     
-    public ClienteBean() {
-        cliente = clienteServico.getClientePorId(1L);
+    @PostConstruct
+    public void init(){
+        cliente = (Cliente) usuarioServico.getUsuarioPorId(1L);
     }
+    
+    public ClienteBean() {}
     
     public String initHistorico(){
         String resultado = "";
@@ -92,8 +102,14 @@ public class ClienteBean extends BasicBean implements Serializable {
         return nav;
     }
     
+    public void adicionarItem(){
+        novoItem.copiarPreco();
+        novaVenda.getItensVenda().add(novoItem);
+    }
+    
     public void initNovoItem(){
         novoItem = new ItemVenda();
+        novoItem.setProduto(new Produto());
     }
     
     public Cliente getCliente() {

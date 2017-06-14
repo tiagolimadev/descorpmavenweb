@@ -55,7 +55,9 @@
                             <h:outputText value="#{item.quantidade}" />
                         </p:column>
                         <p:column headerText="Sub-Total">
-                            <h:outputText value="#{item.subTotal}" />
+                            <h:outputText value="#{item.subTotal}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
                         </p:column>
                         <f:facet name="footer">
                             <h:outputText value="#{clienteBean.vendaSelecionada.valorTotal}">

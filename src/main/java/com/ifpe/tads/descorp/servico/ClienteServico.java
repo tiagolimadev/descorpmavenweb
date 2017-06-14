@@ -29,10 +29,6 @@ public class ClienteServico {
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;
     
-    public Cliente getClientePorId(Long id){
-        return entityManager.find(Cliente.class, 1);
-    }
-    
     public Cliente getHistorico(Cliente cliente){
         
         if(!entityManager.contains(cliente)){

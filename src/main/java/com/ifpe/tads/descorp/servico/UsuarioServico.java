@@ -29,6 +29,10 @@ public class UsuarioServico {
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;
     
+    public Usuario getUsuarioPorId(Long id){
+        return entityManager.find(Usuario.class, id);
+    }
+    
     public void salvar(Usuario usuario){
         entityManager.persist(usuario);
     }
