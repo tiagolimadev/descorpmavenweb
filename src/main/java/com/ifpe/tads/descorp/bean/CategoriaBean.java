@@ -12,7 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.validation.Valid;
 
 /**
@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * @author Tiago Lima
  */
 @ManagedBean(name = "categoriaBean")
-@RequestScoped
+@SessionScoped
 public class CategoriaBean implements Serializable {
     
     @EJB
@@ -44,25 +44,24 @@ public class CategoriaBean implements Serializable {
         this.categoria = new Categoria();
     }
     
+    public void selecionarCategoria(Categoria categoria) {
+        setCategoria(categoria);
+    }
+    
     public void cadastrarCategoria() {
-        categoriaServico.salvar(categoria);
+        categoriaServico.salvar(this.categoria);
     }
     
     public void listarCategorias() {
         listaCategorias = categoriaServico.listar();
     }
     
-    public void removerCategoria(Categoria categoria) {
-        categoriaServico.remover(categoria);
+    public void removerCategoria() {
+        categoriaServico.remover(this.categoria);
     }
     
-    public String editarCategoria(Categoria categoria) {
-        setCategoria(categoria);
-        return "editarCategoria";
-    }
-    
-    public void atualizarCategoria(Categoria categoria) {
-        categoriaServico.atualizar(categoria);
+    public void atualizarCategoria() {
+        categoriaServico.atualizar(this.categoria);
     }
 
     public Categoria getCategoria() {

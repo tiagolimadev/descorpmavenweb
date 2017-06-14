@@ -17,6 +17,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -62,8 +63,8 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @org.hibernate.validator.constraints.NotBlank
     @Size(max = 20)
+    @NotBlank
     @Column(name = "TXT_NOME")
     private String nome;
     

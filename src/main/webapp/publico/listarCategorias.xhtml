@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>GerenciaWeb | Listar Categorias</title>
+    </h:head>
+    <h:body>
+        <!-- Button Add Categoria -->
+        <p:panelGrid id="addCat">
+            <p:commandButton actionListener="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('dlgCadCat').show();" icon="fa fa-fw fa-plus" value="Nova Categoria" update="listaCategoriasForm" />
+        </p:panelGrid>
+        
+        <!-- Form Datatable -->
+        <p:panelGrid id="formDatatable" columns="2">
+            <h:form id="listaCategoriasForm">
+                <p:dataTable id="listaCategorias" value="#{categoriaBean.listaCategorias}" var="categoria" rowKey="#{categoria.id}"
+                             paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             rows="#{categoriaBean.linhas}">
+                    <p:column headerText="Nome" sortBy="#{categoria.nome}">
+                        <h:outputText value="#{categoria.nome}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('dlgEditCat').show();" value="Editar" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
+                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('confRemCat').show();" value="Remover" icon="fa fa-fw fa-remove" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panelGrid>
+        
+        <!-- Dialog Cadastrar Categoria -->
+        <p:dialog header="Cadastrar Categoria" widgetVar="dlgCadCat" modal="true" closeOnEscape="true" resizable="false">
+            <p:fieldset legend="Nova Categoria" toggleable="true">
+                <p:outputLabel value="Nome" for="nomeCad"/>
+                <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{categoriaBean.categoria.nome}" />
+            </p:fieldset>
+            <p:commandButton actionListener="#{categoriaBean.cadastrarCategoria()}" oncomplete="PF('dlgCadCat').hide();" value="Cadastrar" icon="fa fa-fw fa-save" update="listaCategoriasForm" />
+            <p:commandButton value="Cancelar" onclick="PF('dlgCadCat').hide();" type="button" />
+        </p:dialog>
+
+        <!-- Dialog Editar Categoria -->
+        <p:dialog header="Editar Categoria" widgetVar="dlgEditCat" modal="true" closeOnEscape="true" resizable="false">
+            <p:fieldset legend="Editar Categoria" toggleable="true">
+                <p:outputLabel value="Nome" for="nomeEdit"/>
+                <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{categoriaBean.categoria.nome}" />
+            </p:fieldset>
+            <p:commandButton actionListener="#{categoriaBean.atualizarCategoria()}" oncomplete="PF('dlgCadCat').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
+            <p:commandButton value="Cancelar" onclick="PF('dlgEditCat').hide();" type="button" />
+        </p:dialog>
+
+        <!-- ConfirmDialog Remoção de Categoria -->
+        <p:confirmDialog message="Tem certeza que deseja remover a categoria?"
+                         header="Confirmação de Remoção de Categoria" severity="alert"
+                         widgetVar="confRemCat" closeOnEscape="true">
+            <p:commandButton value="Sim" actionListener="#{categoriaBean.removerCategoria()}" oncomplete="PF('confRemCat').hide()" update="listaCategoriasForm" />
+            <p:commandButton value="Não" onclick="PF('confRemCat').hide();" type="button" />
+        </p:confirmDialog>
+        
+    </h:body>
+</html>
