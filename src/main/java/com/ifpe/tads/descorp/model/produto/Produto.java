@@ -90,7 +90,7 @@ public class Produto implements Serializable {
 
     @DecimalMin("0.1")
     @NotNull
-    @Column(name = "NUM_PRECO")
+    @Column(name = "NUM_PRECO", scale = 2, precision = 15)
     private BigDecimal preco;
 
     @Min(0)

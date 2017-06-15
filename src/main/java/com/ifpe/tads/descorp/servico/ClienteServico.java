@@ -35,7 +35,7 @@ public class ClienteServico {
             entityManager.merge(cliente);
         }
         
-        cliente.getVendas();
+        cliente.setVendas(cliente.getVendas());
         
         return cliente;
     }

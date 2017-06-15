@@ -40,16 +40,16 @@ public class CategoriaBean implements Serializable {
     }
 
     public CategoriaBean() {
-        this.categoriaServico = new CategoriaServico();
         this.categoria = new Categoria();
     }
     
-    public void selecionarCategoria(Categoria categoria) {
-        setCategoria(categoria);
+    public void initCategoria() {
+        this.categoria = new Categoria();
     }
     
     public void cadastrarCategoria() {
         categoriaServico.salvar(this.categoria);
+        listarCategorias();
     }
     
     public void listarCategorias() {
@@ -58,10 +58,16 @@ public class CategoriaBean implements Serializable {
     
     public void removerCategoria() {
         categoriaServico.remover(this.categoria);
+        listarCategorias();
     }
     
     public void atualizarCategoria() {
         categoriaServico.atualizar(this.categoria);
+        listarCategorias();
+    }
+    
+    public void selecionarCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public Categoria getCategoria() {

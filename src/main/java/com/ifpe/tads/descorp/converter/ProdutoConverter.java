@@ -29,7 +29,7 @@ public class ProdutoConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object entity) {
-        if (entity != null && entity instanceof Produto) {
+        if (entity != null && entity instanceof Produto && ((Produto) entity).getId() != null) {
             component.getAttributes().put(((Produto) entity).getId().toString(), entity);
             return ((Produto) entity).getId().toString();
         }

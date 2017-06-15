@@ -37,7 +37,7 @@ public class ItemVenda implements Serializable {
     
     @DecimalMin("0.1")
     @NotNull
-    @Column(name = "NUM_PRECO_UNITARIO", nullable = false)
+    @Column(name = "NUM_PRECO_UNITARIO", nullable = false, scale = 2, precision = 15)
     private BigDecimal precoUnitario;
     
     @Transient

@@ -32,8 +32,6 @@ import javax.validation.Valid;
 @ManagedBean(name = "clienteBean")
 public class ClienteBean extends BasicBean implements Serializable {
     
-    
-    
     @Valid
     private Cliente cliente;
 
@@ -57,6 +55,8 @@ public class ClienteBean extends BasicBean implements Serializable {
     
     @Valid
     private ItemVenda novoItem;
+    
+    private Produto produtoSelecionado;
     
     private List<Produto> produtosDisponiveis;
     
@@ -103,13 +103,15 @@ public class ClienteBean extends BasicBean implements Serializable {
     }
     
     public void adicionarItem(){
+        novoItem.setProduto(produtoSelecionado);
         novoItem.copiarPreco();
         novaVenda.getItensVenda().add(novoItem);
     }
     
     public void initNovoItem(){
         novoItem = new ItemVenda();
-        novoItem.setProduto(new Produto());
+        novoItem.setVenda(novaVenda);
+        produtoSelecionado = new Produto();
     }
     
     public Cliente getCliente() {
@@ -150,6 +152,14 @@ public class ClienteBean extends BasicBean implements Serializable {
 
     public void setProdutosDisponiveis(List<Produto> produtosDisponiveis) {
         this.produtosDisponiveis = produtosDisponiveis;
+    }
+
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
+    }
+
+    public void setProdutoSelecionado(Produto produtoSelecionado) {
+        this.produtoSelecionado = produtoSelecionado;
     }
     
 }
