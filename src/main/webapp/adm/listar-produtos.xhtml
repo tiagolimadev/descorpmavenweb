@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>GerenciaWeb | Listar Produtos</title>
+        <link rel="stylesheet" href="../css/materialize.min.css" />
+        <link rel="stylesheet" href="../css/custom.css" />
+    </h:head>
+    <h:body>
+
+        <h:form id="listaProdutosForm">
+
+            <p:growl id="growl" autoUpdate="true" />
+            
+            <!-- Button Add Produto -->
+            <p:panelGrid id="addProd">
+                <p:commandButton action="#{produtoBean.initProduto()}" oncomplete="PF('dlgCadProd').show();" icon="fa fa-fw fa-plus" value="Novo Produto" update="formCadastrar" immediate="true" />
+            </p:panelGrid>
+
+            <!-- Form Datatable -->
+            <p:panelGrid id="formDatatable" columns="2">
+
+                <p:dataTable id="listaProdutos" value="#{produtoBean.listaProdutos}" var="produto" rowKey="#{produto.id}"
+                             paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             rows="#{produtoBean.linhas}">
+                    <p:column headerText="Código" sortBy="#{produto.codigo}">
+                        <h:outputText value="#{produto.codigo}" />
+                    </p:column>
+                    <p:column headerText="Nome" sortBy="#{produto.nome}">
+                        <h:outputText value="#{produto.nome}" />
+                    </p:column>
+                    <p:column headerText="Descrição" filterBy="#{produto.descricao}">
+                        <h:outputText value="#{produto.descricao}" />
+                    </p:column>
+                    <p:column headerText="Preço" sortBy="#{produto.preco}">
+                        <h:outputText value="#{produto.preco}">
+                            <!--<f:convertNumber pattern="9.99" />-->
+                        </h:outputText>
+                    </p:column>
+                        <p:column headerText="Quantidade Disponível" sortBy="#{produto.qtdeDisponivel}">
+                        <h:outputText value="#{produto.qtdeDisponivel}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton action="#{produtoBean.selecionarProduto(produto)}" oncomplete="PF('dlgEditProd').show();" value="Editar" icon="fa fa-fw fa-edit" update="atualizarForm" />
+                        <p:commandButton action="#{produtoBean.selecionarProduto(produto)}" oncomplete="PF('confRemProd').show();" value="Remover" icon="fa fa-fw fa-remove" />
+                    </p:column>
+                </p:dataTable>
+
+            </p:panelGrid>
+        </h:form>
+
+        <h:form id="formCadastrar">
+            <!-- Dialog Cadastrar Produto -->
+            <p:dialog header="Cadastrar Produto" widgetVar="dlgCadProd" modal="true" closeOnEscape="true" resizable="false">
+
+                <div class="row">
+                    <p:outputLabel value="Código" for="codigoCad"/>
+                    <p:inputText id="codigoCad" type="text" label="codigoCad" value="#{produtoBean.produto.codigo}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Nome" for="nomeCad"/>
+                    <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{produtoBean.produto.nome}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Descrição" for="descricaoCad"/>
+                    <p:inputTextarea id="descricaoCad" label="descricaoCad" value="#{produtoBean.produto.descricao}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Preço" for="precoCad"/>
+                    <p:inputText id="precoCad" label="precoCad" value="#{produtoBean.produto.preco}">
+                        <f:converter converterId="javax.faces.BigDecimal" />
+                    </p:inputText>
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Quantidade Disponível" for="qtdeDisponivelCad"/>
+                    <p:inputText id="qtdeDisponivelCad" type="text" label="qtdeDisponivelCad" value="#{produtoBean.produto.qtdeDisponivel}" />
+                </div>
+
+                <p:commandButton action="#{produtoBean.cadastrarProduto()}" oncomplete="PF('dlgCadProd').hide();" value="Cadastrar" icon="fa fa-fw fa-save" update="listaProdutosForm" />
+                <p:commandButton value="Cancelar" onclick="PF('dlgCadProd').hide();" type="button" />
+            </p:dialog>
+        </h:form>
+
+        <h:form id="atualizarForm">
+            <!-- Dialog Editar Produto -->
+            <p:dialog header="Editar Produto" widgetVar="dlgEditProd" modal="true" closeOnEscape="true" resizable="false">
+                <div class="row">
+                    <p:outputLabel value="Código" for="codigoEdit"/>
+                    <p:inputText id="codigoEdit" type="text" label="codigoEdit" value="#{produtoBean.produto.codigo}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Nome" for="nomeEdit"/>
+                    <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{produtoBean.produto.nome}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Descrição" for="descricaoEdit"/>
+                    <p:inputTextarea id="descricaoEdit" label="descricaoEdit" value="#{produtoBean.produto.descricao}" />
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Preço" for="precoEdit"/>
+                    <p:inputText id="precoEdit" label="precoEdit" value="#{produtoBean.produto.preco}">
+                        <f:converter converterId="javax.faces.BigDecimal" />
+                    </p:inputText>
+                </div>
+                <div class="row">
+                    <p:outputLabel value="Quantidade Disponível" for="qtdeDisponivelEdit"/>
+                    <p:inputText id="qtdeDisponivelEdit" type="text" label="qtdeDisponivelEdit" value="#{produtoBean.produto.qtdeDisponivel}" />
+                </div>
+                <p:commandButton action="#{produtoBean.atualizarProduto()}" oncomplete="PF('dlgEditProd').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaProdutosForm" />
+                <p:commandButton value="Cancelar" onclick="PF('dlgEditProd').hide();" type="button" />
+            </p:dialog>
+        </h:form>
+        <h:form id="removerForm">
+            <!-- ConfirmDialog Remoção de Produto -->
+            <p:confirmDialog message="Tem certeza que deseja remover o produto?"
+                             header="Confirmação de Remoção de Produto" severity="alert"
+                             widgetVar="confRemProd" closeOnEscape="true">
+                <p:commandButton value="Sim" action="#{produtoBean.removerProduto()}" oncomplete="PF('confRemProd').hide()" update="listaProdutosForm" />
+                <p:commandButton value="Não" onclick="PF('confRemProd').hide();" type="button" />
+            </p:confirmDialog>
+        </h:form>
+
+    </h:body>
+</html>

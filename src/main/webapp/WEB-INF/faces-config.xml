@@ -39,5 +39,10 @@
             <to-view-id>/publico/listarCategorias.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>listarProdutos</from-outcome>
+            <to-view-id>/adm/listar-produtos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

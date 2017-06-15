@@ -36,4 +36,19 @@ public class ProdutoServico {
         return query.getResultList();
     }
     
+    public void salvar(Produto produto) {
+       entityManager.persist(produto);
+    }
+    
+    public void atualizar(Produto produto) {
+        entityManager.merge(produto);
+    }
+    
+    public void remover(Produto produto) {
+        if (!entityManager.contains(produto)) {
+            produto = entityManager.merge(produto);
+        }
+        entityManager.remove(produto);
+    }
+    
 }
