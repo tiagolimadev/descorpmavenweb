@@ -44,5 +44,18 @@
             <to-view-id>/adm/listar-produtos.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>listarOperadores</from-outcome>
+            <to-view-id>/adm/listar-operadores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
+    <converter>
+        <converter-id>CPFConverter</converter-id>
+        <converter-class>com.ifpe.tads.descorp.converter.CPFConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>DataNascConverter</converter-id>
+        <converter-class>com.ifpe.tads.descorp.converter.DataNascConverter</converter-class>
+    </converter>
 </faces-config>

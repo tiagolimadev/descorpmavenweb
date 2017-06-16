@@ -25,6 +25,10 @@ public class Operador extends Usuario implements Serializable {
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Venda> vendas;
 
+    public Operador() {
+        super.setTipo(TipoUsuario.OPERADOR);
+    }
+    
     public List<Venda> getVendas() {
         return vendas;
     }
