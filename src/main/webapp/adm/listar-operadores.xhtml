@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>GerenciaWeb | Listar Operadores</title>
-        <link rel="stylesheet" href="../css/materialize.min.css" />
-        <link rel="stylesheet" href="../css/custom.css" />
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
 
         <h:form id="listaOperadoresForm">
-
             <p:growl id="growl" autoUpdate="true" />
-            
+
             <!-- Button Add Operador -->
             <p:panelGrid id="addOper">
                 <p:commandButton action="#{operadorBean.initOperador()}" oncomplete="PF('dlgCadOper').show();" icon="fa fa-fw fa-plus" value="Novo Operador" update="formCadastrar" immediate="true" />
@@ -22,10 +18,17 @@
 
             <!-- Form Datatable -->
             <p:panelGrid id="formDatatable" columns="2">
-
                 <p:dataTable id="listaOperadores" value="#{operadorBean.listaOperadores}" var="operador" rowKey="#{operador.id}"
                              paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              rows="#{operadorBean.linhas}">
+                    <f:facet name="header">
+                        <p:panelGrid>
+                            Lista de Operadores
+                            <p:commandButton id="toggler" type="button" value="Colunas" style="float:right" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="listaOperadores" trigger="toggler" />
+                        </p:panelGrid>
+                    </f:facet>
+
                     <p:column headerText="Nome" sortBy="#{operador.nome}">
                         <h:outputText value="#{operador.nome}" />
                     </p:column>
@@ -60,41 +63,44 @@
 
         <h:form id="formCadastrar">
             <!-- Dialog Cadastrar Operador -->
-            <p:dialog header="Cadastrar Operador" widgetVar="dlgCadOper" modal="true" closeOnEscape="true" resizable="false">
-                <div class="row">
-                    <h:outputLabel for="nomeCad">Nome</h:outputLabel>
-                    <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{operadorBean.operador.nome}" />
-                </div>
-                <div class="row">
-                    <h:outputLabel for="emailCad">Email</h:outputLabel>
-                    <p:inputText id="emailCad" type="email" label="emailCad" value="#{operadorBean.operador.email}" />
-                </div>
-                <div class="row">
-                    <h:outputLabel for="cpfCad">CPF</h:outputLabel>
-                    <p:inputMask id="cpfCad" mask="999.999.999-99" label="cpfCad" value="#{operadorBean.operador.cpf}" />
-                </div>
-                <div class="row">
-                    <h:outputLabel for="dataNascCad">Data Nascimento</h:outputLabel>
-                    <p:inputText id="dataNascCad" type="date" label="dataNascCad" value="#{operadorBean.operador.dataNascimento}">
-                        <f:convertDateTime pattern="yyyy-MM-dd" />
-                    </p:inputText>
-                </div>
-                <div class="row">
-                    <h:outputLabel for="loginCad">Login</h:outputLabel>
-                    <p:inputText id="loginCad" type="text" label="loginCad" value="#{operadorBean.operador.login}" />
-                </div>
-                <div class="row">
-                    <h:outputLabel for="senhaCad">Senha</h:outputLabel>
-                    <p:password id="senhaCad" label="senhaCad" value="#{operadorBean.operador.senha}"></p:password>
-                </div>
-                <p:commandButton action="#{operadorBean.cadastrarOperador()}" oncomplete="PF('dlgCadOper').hide();" value="Cadastrar" icon="fa fa-fw fa-save" update="listaOperadoresForm" />
-                <p:commandButton value="Cancelar" onclick="PF('dlgCadOper').hide();" type="button" />
+            <p:dialog header="Cadastrar Operador" widgetVar="dlgCadOper" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
+                <p:fieldset legend="Novo Operador" toggleable="true">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="nomeCad">Nome</h:outputLabel>
+                        <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{operadorBean.operador.nome}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="emailCad">Email</h:outputLabel>
+                        <p:inputText id="emailCad" type="email" label="emailCad" value="#{operadorBean.operador.email}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="cpfCad">CPF</h:outputLabel>
+                        <p:inputMask id="cpfCad" mask="999.999.999-99" label="cpfCad" value="#{operadorBean.operador.cpf}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="dataNascCad">Data Nascimento</h:outputLabel>
+                        <p:calendar id="dataNascCad" label="dataNascCad" pattern="dd/MM/yyyy" mask="true" value="#{operadorBean.operador.dataNascimento}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="loginCad">Login</h:outputLabel>
+                        <p:inputText id="loginCad" type="text" label="loginCad" value="#{operadorBean.operador.login}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="senhaCad">Senha</h:outputLabel>
+                        <p:password id="senhaCad" label="senhaCad" value="#{operadorBean.operador.senha}" feedback="true" inline="true"
+                                    promptLabel="Por favor, insira uma senha" weakLabel="Senha Fraca" goodLabel="Senha Boa" strongLabel="Senha Forte"></p:password>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <p:commandButton action="#{operadorBean.cadastrarOperador()}" oncomplete="PF('dlgCadOper').hide();" value="Cadastrar" icon="fa fa-fw fa-save" update="listaOperadoresForm" />
+                        <p:commandButton value="Cancelar" onclick="PF('dlgCadOper').hide();" type="button" />
+                    </p:panelGrid>
+                </p:fieldset>
             </p:dialog>
         </h:form>
 
         <h:form id="atualizarForm">
             <!-- Dialog Editar Operador -->
-            <p:dialog header="Editar Operador" widgetVar="dlgEditOper" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog header="Editar Operador" widgetVar="dlgEditOper" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
                 <div class="row">
                     <h:outputLabel for="nomeEdit">Nome</h:outputLabel>
                     <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{operadorBean.operador.nome}" />
@@ -109,9 +115,7 @@
                 </div>
                 <div class="row">
                     <h:outputLabel for="dataNascEdit">Data Nascimento</h:outputLabel>
-                    <p:inputText id="dataNascEdit" type="date" label="dataNascEdit" value="#{operadorBean.operador.dataNascimento}">
-                        <f:convertDateTime pattern="yyyy-MM-dd" />
-                    </p:inputText>
+                    <p:calendar id="dataNascEdit" label="dataNascEdit" pattern="dd/MM/yyyy" mask="true" value="#{operadorBean.operador.dataNascimento}" />
                 </div>
                 <div class="row">
                     <h:outputLabel for="loginEdit">Login</h:outputLabel>
@@ -119,7 +123,8 @@
                 </div>
                 <div class="row">
                     <h:outputLabel for="senhaEdit">Senha</h:outputLabel>
-                    <p:password id="senhaEdit" label="senhaEdit" value="#{operadorBean.operador.senha}"></p:password>
+                    <p:password id="senhaEdit" label="senhaEdit" value="#{operadorBean.operador.senha}"  feedback="true"
+                                promptLabel="Por favor, insira uma senha" weakLabel="Senha Fraca" goodLabel="Senha Boa" strongLabel="Senha Forte"></p:password>
                 </div>
                 <p:commandButton action="#{operadorBean.atualizarOperador()}" oncomplete="PF('dlgEditOper').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaOperadoresForm" />
                 <p:commandButton value="Cancelar" onclick="PF('dlgEditOper').hide();" type="button" />
@@ -129,11 +134,11 @@
             <!-- ConfirmDialog Remoção de Operador -->
             <p:confirmDialog message="Tem certeza que deseja remover o operador?"
                              header="Confirmação de Remoção de Operador" severity="alert"
-                             widgetVar="confRemOper" closeOnEscape="true">
+                             widgetVar="confRemOper" closeOnEscape="true" appendTo="@(body)">
                 <p:commandButton value="Sim" action="#{operadorBean.removerOperador()}" oncomplete="PF('confRemOper').hide()" update="listaOperadoresForm" />
                 <p:commandButton value="Não" onclick="PF('confRemOper').hide();" type="button" />
             </p:confirmDialog>
         </h:form>
 
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

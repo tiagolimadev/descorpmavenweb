@@ -49,6 +49,11 @@
             <to-view-id>/adm/listar-operadores.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gerenciarUsuarios</from-outcome>
+            <to-view-id>/adm/gerenciar-usuarios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
     <converter>
         <converter-id>CPFConverter</converter-id>
