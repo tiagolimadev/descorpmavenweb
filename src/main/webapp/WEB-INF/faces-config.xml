@@ -69,6 +69,11 @@
             <to-view-id>/cliente/nova-compra.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>home-cliente</from-outcome>
+            <to-view-id>/cliente/home-cliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
     <converter>
         <converter-id>CPFConverter</converter-id>

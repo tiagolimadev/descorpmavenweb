@@ -10,48 +10,57 @@
         <h:form id="form">
 
             <div class="row">
-                <p:commandButton action="#{clienteBean.initNovoItem()}" oncomplete="PF('dlgNovoItem').show()" value="Novo Item" immediate="true" update="formItem" />
+                <div class="col-md-12">
+                    <p:commandButton action="#{clienteBean.initNovoItem()}" oncomplete="PF('dlgNovoItem').show()" value="Novo Item" immediate="true" update="formItem" />
+                </div>
             </div>
             <p:spacer height="10" />
             <div class="row">
-                <p:dataTable value="#{clienteBean.novaVenda.itensVenda}" var="item">
-                    <p:column headerText="Produto">
-                        <h:outputText value="#{item.produto.nome}" />
-                    </p:column>
-                    <p:column headerText="Preço Unitário">
-                        <h:outputText value="#{item.precoUnitario}">
-                            <f:convertNumber type="currency" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Qtde.">
-                        <h:outputText value="#{item.quantidade}" />
-                    </p:column>
-                    <p:column headerText="Sub-Total">
-                        <h:outputText value="#{item.subTotal}">
-                            <f:convertNumber type="currency" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <p:commandButton update="form" onclick="PF('dlgConfirm').show()" icon="ui-icon-trash" title="Remover" type="button" />
-                        <p:confirmDialog message="Tem certeza que deseja remover este item?"
-                                         header="Remover Item" severity="alert"
-                                         widgetVar="dlgConfirm" closeOnEscape="true">
-                            <p:commandButton value="Sim" action="#{clienteBean.removerItem(item)}" oncomplete="PF('dlgConfirm').hide()" update="form" />
-                            <p:commandButton value="Não" onclick="PF('dlgConfirm').hide();" type="button" />
-                        </p:confirmDialog>
-                    </p:column>
-                    <f:facet name="footer">
-                        Total: <h:outputText value="#{clienteBean.novaVenda.valorTotal}">
-                            <f:convertNumber type="currency" />
-                        </h:outputText>
-                    </f:facet>
-                </p:dataTable>
+                <div class="col-md-12">
+                    <p:dataTable value="#{clienteBean.novaVenda.itensVenda}" var="item">
+                        <p:column headerText="Produto">
+                            <h:outputText value="#{item.produto.nome}" />
+                        </p:column>
+                        <p:column headerText="Preço Unitário">
+                            <h:outputText value="#{item.precoUnitario}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Qtde.">
+                            <h:outputText value="#{item.quantidade}" />
+                        </p:column>
+                        <p:column headerText="Sub-Total">
+                            <h:outputText value="#{item.subTotal}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton update="form" onclick="PF('dlgConfirm').show()" icon="ui-icon-trash" title="Remover" type="button" />
+                            <p:confirmDialog message="Tem certeza que deseja remover este item?"
+                                             header="Remover Item" severity="alert"
+                                             widgetVar="dlgConfirm" closeOnEscape="true">
+                                <p:commandButton value="Sim" action="#{clienteBean.removerItem(item)}" oncomplete="PF('dlgConfirm').hide()" update="form" />
+                                <p:commandButton value="Não" onclick="PF('dlgConfirm').hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:column>
+                        <f:facet name="footer">
+                            Total: <h:outputText value="#{clienteBean.novaVenda.valorTotal}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </f:facet>
+                    </p:dataTable>
+                </div>
             </div>
-            
+
             <p:spacer height="10" />
-            
+
             <div class="row">
-                <p:commandButton action="#{clienteBean.finalizarCompra()}" value="Finalizar Compra" />
+                <div class="col-md-12">
+                    <p:commandButton action="#{clienteBean.finalizarCompra()}" value="Finalizar Compra" />
+                
+                    <p:commandButton value="Cancelar" action="home-cliente" immediate="true" />
+                
+                </div>
             </div>
 
         </h:form>
@@ -61,19 +70,29 @@
                 <p:growl id="growl" autoUpdate="true"/>
                 <p:outputPanel id="container">
                     <div class="row">
-                        <p:selectOneMenu id="selectProduto" value="#{clienteBean.novoItem.produto}" converter="produtoConverter">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{clienteBean.produtosDisponiveis}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" />
-                            <p:ajax update="container" />
-                        </p:selectOneMenu>
+                        <div class="col-md-12">
+                            <p:selectOneMenu id="selectProduto" value="#{clienteBean.novoItem.produto}" converter="produtoConverter">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{clienteBean.produtosDisponiveis}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" />
+                                <p:ajax update="container" />
+                            </p:selectOneMenu>
+                        </div>
                     </div>
                     <div class="row">
-                        Preço: <h:outputText value="#{clienteBean.novoItem.produto.preco}"> <f:convertNumber type="currency" /> </h:outputText>
+                        <div class="col-md-12">
+                            Preço: <h:outputText value="#{clienteBean.novoItem.produto.preco}"> <f:convertNumber type="currency" /> </h:outputText>
+                        </div>
                     </div>
                     <div class="row">
-                        <p:outputLabel> Quantidade: <p:inputText value="#{clienteBean.novoItem.quantidade}" type="number" /> </p:outputLabel></div>
-                    <div>
-                        <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').hide()" value="Adicionar Produto à compra" update="form" />
+                        <div class="col-md-12">
+                            <p:outputLabel> Quantidade: <p:inputText value="#{clienteBean.novoItem.quantidade}" type="number" /> </p:outputLabel></div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 center-align">
+                            <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').hide()" value="Adicionar Produto à compra" update="form" />
+                        </div>
                     </div>
                 </p:outputPanel>
             </p:dialog>

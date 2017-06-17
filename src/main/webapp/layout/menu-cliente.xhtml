@@ -7,12 +7,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:body> 
         <h:form id="menuClienteForm">
-            <p:commandButton value="Nova Compra" action="#{clienteBean.initNovaCompra()}"    />
-            <br />
-            <p:commandButton value="Histórico de Compras" action="#{clienteBean.initHistorico()}" />
-            <br />
-            <p:commandButton value="Editar Perfil" action="#{editarBean.initEditarPerfil()}" />
-            <br />
+            <ul class="nav nav-pills nav-stacked">
+                <li><p:commandButton value="Nova Compra" action="#{clienteBean.initNovaCompra()}"    /></li>
+                <li><p:commandButton value="Histórico de Compras" action="#{clienteBean.initHistorico()}" /></li>
+                <li><p:commandButton value="Editar Perfil" action="editar-perfil" /></li>
+            </ul>
         </h:form>
     </h:body>
 </html>

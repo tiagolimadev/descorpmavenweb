@@ -10,30 +10,39 @@
         <h:form id="form">
             <p:growl id="growl" autoUpdate="true"/>
 
-            <p:panelGrid>
-
-                <div class="row">
+            <div class="row">
+                <div class="col-md-4">
                     <h:outputLabel for="nome">Nome: </h:outputLabel>
-                    <p:inputText id="nome" type="text" label="nome" value="#{editarBean.usuario.nome}" />
+                    <p:inputText id="nome" type="text" label="nome" value="#{clienteBean.cliente.nome}" class="form-control" />
                 </div>
-                <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <h:outputLabel for="email">Email: </h:outputLabel>
-                    <p:inputText id="email" type="email" label="email" value="#{editarBean.usuario.email}" />
+                    <p:inputText id="email" type="email" label="email" value="#{clienteBean.cliente.email}" class="form-control" />
                 </div>
-                <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <h:outputLabel for="dataNasc">Data Nasc.: </h:outputLabel>
-                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{editarBean.usuario.dataNascimento}">
+                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{clienteBean.cliente.dataNascimento}" class="form-control">
                         <f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" timeZone="America/Sao_Paulo" />
                     </p:inputText>
                 </div>
-                <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <h:outputLabel for="login">Login: </h:outputLabel>
-                    <p:inputText id="login" type="text" label="login" value="#{editarBean.usuario.login}" />
+                    <p:inputText id="login" type="text" label="login" value="#{clienteBean.cliente.login}" class="form-control" />
                 </div>
+            </div>
 
-            </p:panelGrid>
-            <p:commandButton action="#{editarBean.editarUsuario()}" value="Salvar" ajax="false" validateClient="true" />
-            <p:commandButton action="home-cliente" immediate="true" value="Cancelar" />
+            <div class="row">
+                <div class="col-md-4">
+                    <p:commandButton action="#{clienteBean.editarUsuario()}" value="Salvar" ajax="false" validateClient="true" />
+                    <p:commandButton action="home-cliente" immediate="true" value="Cancelar" />
+                </div>
+            </div>
 
         </h:form>
     </ui:define>

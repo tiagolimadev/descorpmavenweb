@@ -9,70 +9,89 @@
     <ui:define name="conteudo">
 
         <h:form id="form">
-            <p:dataTable id="listaUsuarios" value="#{clienteBean.cliente.vendas}" var="venda" rowKey="#{venda.id}" paginator="10">
-                <p:column headerText="Data da Compra" sortBy="#{venda.dataVenda}">
-                    <h:outputText value="#{venda.dataVenda}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Valor Total">
-                    <h:outputText value="#{venda.valorTotal}">
-                        <f:convertNumber type="currency" />
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Cancelada">
-                    <h:outputText value="#{venda.cancelada}" />
-                </p:column>
-                <p:column>
-                    <p:commandButton update="form" oncomplete="PF('dlgVenda').show()" icon="ui-icon-search" title="Detalhes">
-                        <f:setPropertyActionListener value="#{venda}" target="#{clienteBean.vendaSelecionada}" />
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-
-            <p:dialog header="Detalhes" widgetVar="dlgVenda" closeOnEscape="true" resizable="false" height="400" width="600">
-                <p:scrollPanel mode="native">
-                    <div>Cliente: <h:outputText value="#{clienteBean.cliente.nome}" /></div>
-                    <div>Data da Compra: 
-                        <h:outputText value="#{clienteBean.vendaSelecionada.dataVenda}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText></div>
-                    <div>Produtos:</div>
-                    <p:dataTable value="#{clienteBean.vendaSelecionada.itensVenda}" var="item" emptyMessage="Não há entregas cadastradas." paginator="10">
-                        <p:column headerText="Produto">
-                            <h:outputText value="#{item.produto.nome}" />
-                        </p:column>
-                        <p:column headerText="Preço Unitário">
-                            <h:outputText value="#{item.precoUnitario}">
-                                <f:convertNumber type="currency" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Quantidade">
-                            <h:outputText value="#{item.quantidade}" />
-                        </p:column>
-                        <p:column headerText="Sub-Total">
-                            <h:outputText value="#{item.subTotal}">
-                                <f:convertNumber type="currency" />
-                            </h:outputText>
-                        </p:column>
-                        <f:facet name="footer">
-                            <h:outputText value="#{clienteBean.vendaSelecionada.valorTotal}">
-                                <f:convertNumber type="currency" />
-                            </h:outputText>
-                        </f:facet>
-                    </p:dataTable>
-
-                    <div>Entregas:</div>
-                    <p:dataTable value="#{clienteBean.vendaSelecionada.entregas}" var="entrega" emptyMessage="Não há entregas cadastradas.">
-                        <p:column headerText="Data da Entrega">
-                            <h:outputText value="#{entrega.dataEntrega}">
+            <div class="row">
+                <div class="col-md-12">
+                    <p:dataTable id="listaUsuarios" value="#{clienteBean.cliente.vendas}" var="venda" rowKey="#{venda.id}" paginator="10">
+                        <p:column headerText="Data da Compra" sortBy="#{venda.dataVenda}">
+                            <h:outputText value="#{venda.dataVenda}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Situação">
-                            <h:outputText value="#{entrega.statusEntrega}" />
+                        <p:column headerText="Valor Total">
+                            <h:outputText value="#{venda.valorTotal}">
+                                <f:convertNumber type="currency" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cancelada">
+                            <h:outputText value="#{venda.cancelada}" />
+                        </p:column>
+                        <p:column>
+                            <p:commandButton update="form" oncomplete="PF('dlgVenda').show()" icon="ui-icon-search" title="Detalhes">
+                                <f:setPropertyActionListener value="#{venda}" target="#{clienteBean.vendaSelecionada}" />
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <p:commandButton value="Voltar" action="home-cliente" immediate="true" />
+                </div>
+            </div>
+            
+            <p:dialog header="Detalhes" widgetVar="dlgVenda" closeOnEscape="true" resizable="false" height="400" width="600">
+                <p:scrollPanel mode="native">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Cliente: <h:outputText value="#{clienteBean.cliente.nome}" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">Data da Compra: 
+                            <h:outputText value="#{clienteBean.vendaSelecionada.dataVenda}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p:dataTable value="#{clienteBean.vendaSelecionada.itensVenda}" var="item" emptyMessage="Não há entregas cadastradas." paginator="10">
+                                <p:column headerText="Produto">
+                                    <h:outputText value="#{item.produto.nome}" />
+                                </p:column>
+                                <p:column headerText="Preço Unitário">
+                                    <h:outputText value="#{item.precoUnitario}">
+                                        <f:convertNumber type="currency" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Quantidade">
+                                    <h:outputText value="#{item.quantidade}" />
+                                </p:column>
+                                <p:column headerText="Sub-Total">
+                                    <h:outputText value="#{item.subTotal}">
+                                        <f:convertNumber type="currency" />
+                                    </h:outputText>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <h:outputText value="#{clienteBean.vendaSelecionada.valorTotal}">
+                                        <f:convertNumber type="currency" />
+                                    </h:outputText>
+                                </f:facet>
+                            </p:dataTable>
+                        </div></div>
+                    <div class="row">
+                        <div class="col-md-12">Entregas:
+                            <p:dataTable value="#{clienteBean.vendaSelecionada.entregas}" var="entrega" emptyMessage="Não há entregas cadastradas.">
+                                <p:column headerText="Data da Entrega">
+                                    <h:outputText value="#{entrega.dataEntrega}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Situação">
+                                    <h:outputText value="#{entrega.statusEntrega}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div></div>
                 </p:scrollPanel>
             </p:dialog>
         </h:form>

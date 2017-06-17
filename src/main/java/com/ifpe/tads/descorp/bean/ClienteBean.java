@@ -102,6 +102,13 @@ public class ClienteBean extends BasicBean implements Serializable {
         return nav;
     }
     
+    public String editarUsuario(){
+        
+        usuarioServico.editar(cliente);
+        
+        return "home-cliente";
+    }
+    
     public void adicionarItem(){
         novoItem.copiarPreco();
         novaVenda.getItensVenda().add(novoItem);
