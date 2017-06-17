@@ -37,4 +37,8 @@ public class UsuarioServico {
         entityManager.persist(usuario);
     }
     
+    public void editar(Usuario usuario){
+        entityManager.merge(usuario);
+    }
+    
 }

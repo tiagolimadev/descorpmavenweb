@@ -41,6 +41,10 @@ import org.hibernate.validator.constraints.NotEmpty;
         @NamedQuery(
             name = "Venda.PorDataCliente",
             query = "SELECT v FROM Venda v WHERE v.cliente.id = :clienteId AND v.dataVenda = :dataVenda"
+        ),
+        @NamedQuery(
+            name = "Venda.PorCliente",
+            query = "SELECT v FROM Venda v WHERE v.cliente.id = :clienteId"
         )
     }
 )

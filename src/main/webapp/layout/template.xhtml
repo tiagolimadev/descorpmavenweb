@@ -7,22 +7,21 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>GerenciaWeb</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     </h:head>
     <h:body>
         <p:growl id="messages" />
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="100" resizable="true"
+            <p:layoutUnit position="north" size="100" resizable="false"
                           closable="false" collapsible="true">
                 <ui:include src="/layout/menu.xhtml" />
             </p:layoutUnit>
-            <p:layoutUnit position="west" size="200" resizable="true"
+            <p:layoutUnit position="west" size="200" resizable="false"
                           closable="false" collapsible="true" effect="drop">
+                <ui:include src="/layout/menu-cliente.xhtml" />
             </p:layoutUnit>
             <p:layoutUnit id="centerLayout" position="center">
                 <ui:insert name="conteudo" />
-            </p:layoutUnit>
-            <p:layoutUnit position="east" size="200" resizable="true"
-                          closable="false" collapsible="true" effect="drop">
             </p:layoutUnit>
             <p:layoutUnit position="south" size="25" resizable="false"
                           closable="false" collapsible="true">

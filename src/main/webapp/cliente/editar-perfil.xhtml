@@ -1,61 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Bebidas Ltda.</title>
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link rel="stylesheet" href="../css/materialize.min.css" />
-        <link rel="stylesheet" href="../css/custom.css" />  
-        <script src="../js/materialize.min.js" defer="defer"></script>
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
         <h:form id="form">
             <p:growl id="growl" autoUpdate="true"/>
-            <div class="row flex-container">
-                <div class="col s6 m4 auto-margin">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="row">
-                                <h:outputLabel for="nome">Nome</h:outputLabel>
-                                <p:inputText id="nome" type="text" label="nome" value="#{cadastroBean.cliente.nome}" />
-                            </div>
-                            <div class="row">
-                                <h:outputLabel for="email">Email</h:outputLabel>
-                                <p:inputText id="email" type="email" label="email" value="#{cadastroBean.cliente.email}" />
-                            </div>
-                            <div class="row">
-                                <div class="col s5">
-                                    
-                                </div>
-                                <div class="col offset-s1 s6">
-                                    <h:outputLabel for="dataNasc">Data Nasc.:</h:outputLabel>
-                                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}">
-                                        <f:convertDateTime pattern="yyyy-MM-dd" />
-                                    </p:inputText>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <h:outputLabel for="login">Login</h:outputLabel>
-                                <p:inputText id="login" type="text" label="login" value="#{cadastroBean.cliente.login}" />
-                            </div>
-                            <div class="row">
-                                <h:outputLabel for="senha">Nova Senha</h:outputLabel>
-                                <p:password id="senha" label="senha" value="#{cadastroBean.confirmacaoSenha}"></p:password>
-                            </div>
-                            <div class="row">
-                                <h:outputLabel for="csenha">Confirmar Senha</h:outputLabel>
-                                <p:password id="csenha" label="csenha" value="#{cadastroBean.confirmacaoSenha}"></p:password>
-                            </div>
-                            <p:commandButton action="#{cadastroBean.cadastrarCliente()}" value="Salvar" ajax="false" validateClient="true" />
-                            <p:commandButton action="" immediate="true" value="Cancelar" />
-                        </div>
-                    </div>
+
+            <p:panelGrid>
+
+                <div class="row">
+                    <h:outputLabel for="nome">Nome: </h:outputLabel>
+                    <p:inputText id="nome" type="text" label="nome" value="#{editarBean.usuario.nome}" />
                 </div>
-            </div>
-                        
+                <div class="row">
+                    <h:outputLabel for="email">Email: </h:outputLabel>
+                    <p:inputText id="email" type="email" label="email" value="#{editarBean.usuario.email}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="dataNasc">Data Nasc.: </h:outputLabel>
+                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{editarBean.usuario.dataNascimento}">
+                        <f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" timeZone="America/Sao_Paulo" />
+                    </p:inputText>
+                </div>
+                <div class="row">
+                    <h:outputLabel for="login">Login: </h:outputLabel>
+                    <p:inputText id="login" type="text" label="login" value="#{editarBean.usuario.login}" />
+                </div>
+
+            </p:panelGrid>
+            <p:commandButton action="#{editarBean.editarUsuario()}" value="Salvar" ajax="false" validateClient="true" />
+            <p:commandButton action="home-cliente" immediate="true" value="Cancelar" />
+
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Bebidas Ltda.</title>
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link rel="stylesheet" href="../css/materialize.min.css" />
-        <link rel="stylesheet" href="../css/custom.css" />  
-        <script src="../js/materialize.min.js" defer="defer"></script>
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
         <h:form id="form">
 
             <div class="row">
                 <p:commandButton action="#{clienteBean.initNovoItem()}" oncomplete="PF('dlgNovoItem').show()" value="Novo Item" immediate="true" update="formItem" />
             </div>
+            <p:spacer height="10" />
             <div class="row">
                 <p:dataTable value="#{clienteBean.novaVenda.itensVenda}" var="item">
                     <p:column headerText="Produto">
@@ -51,6 +47,9 @@
                     </f:facet>
                 </p:dataTable>
             </div>
+            
+            <p:spacer height="10" />
+            
             <div class="row">
                 <p:commandButton action="#{clienteBean.finalizarCompra()}" value="Finalizar Compra" />
             </div>
@@ -58,7 +57,7 @@
         </h:form>
 
         <h:form id="formItem">
-            <p:dialog id="dlgItem" header="Adicionar Item" widgetVar="dlgNovoItem" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog id="dlgItem" header="Adicionar Item" widgetVar="dlgNovoItem" closeOnEscape="true" resizable="false">
                 <p:growl id="growl" autoUpdate="true"/>
                 <p:outputPanel id="container">
                     <div class="row">
@@ -79,6 +78,5 @@
                 </p:outputPanel>
             </p:dialog>
         </h:form>
-
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

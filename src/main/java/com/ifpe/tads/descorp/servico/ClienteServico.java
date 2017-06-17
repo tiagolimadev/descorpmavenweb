@@ -34,11 +34,10 @@ public class ClienteServico {
     
     public Cliente getHistorico(Cliente cliente){
         
-        if(!entityManager.contains(cliente)){
-            entityManager.merge(cliente);
-        }
+        TypedQuery<Venda> queryVendas = entityManager.createNamedQuery("Venda.PorCliente", Venda.class);
+        queryVendas.setParameter("clienteId", cliente.getId());
         
-        cliente.setVendas(cliente.getVendas());
+        cliente.setVendas(queryVendas.getResultList());
         
         TypedQuery<ItemVenda> queryItems = entityManager.createNamedQuery("ItemVenda.PorIdVenda", ItemVenda.class);
         for(Venda venda : cliente.getVendas()){

@@ -54,6 +54,21 @@
             <to-view-id>/adm/gerenciar-usuarios.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>editar-perfil</from-outcome>
+            <to-view-id>/cliente/editar-perfil.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>historico-cliente</from-outcome>
+            <to-view-id>/cliente/historico-cliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>nova-compra</from-outcome>
+            <to-view-id>/cliente/nova-compra.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
     <converter>
         <converter-id>CPFConverter</converter-id>

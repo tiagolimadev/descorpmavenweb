@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>GerenciaWeb | Listar Produtos</title>
-        <link rel="stylesheet" href="../css/materialize.min.css" />
-        <link rel="stylesheet" href="../css/custom.css" />
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
 
         <h:form id="listaProdutosForm">
 
             <p:growl id="growl" autoUpdate="true" />
-            
+
             <!-- Button Add Produto -->
             <p:panelGrid id="addProd">
                 <p:commandButton action="#{produtoBean.initProduto()}" oncomplete="PF('dlgCadProd').show();" icon="fa fa-fw fa-plus" value="Novo Produto" update="formCadastrar" immediate="true" />
@@ -37,10 +34,10 @@
                     </p:column>
                     <p:column headerText="Preço" sortBy="#{produto.preco}">
                         <h:outputText value="#{produto.preco}">
-                            <!--<f:convertNumber pattern="9.99" />-->
+                            <f:convertNumber type="currency" />
                         </h:outputText>
                     </p:column>
-                        <p:column headerText="Quantidade Disponível" sortBy="#{produto.qtdeDisponivel}">
+                    <p:column headerText="Quantidade Disponível" sortBy="#{produto.qtdeDisponivel}">
                         <h:outputText value="#{produto.qtdeDisponivel}" />
                     </p:column>
                     <p:column headerText="Ações">
@@ -54,18 +51,20 @@
 
         <h:form id="formCadastrar">
             <!-- Dialog Cadastrar Produto -->
-            <p:dialog header="Cadastrar Produto" widgetVar="dlgCadProd" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog header="Cadastrar Produto" widgetVar="dlgCadProd" closeOnEscape="true" resizable="false">
 
                 <div class="row">
-                    <p:outputLabel value="Código" for="codigoCad"/>
-                    <p:inputText id="codigoCad" type="text" label="codigoCad" value="#{produtoBean.produto.codigo}" />
+                    <div class="col-md-12 input-group">
+                        <p:outputLabel value="Código: " for="codigoCad"/>
+                        <p:inputText id="codigoCad" class="form-control" type="text" label="codigoCad" value="#{produtoBean.produto.codigo}" />
+                    </div>
                 </div>
                 <div class="row">
-                    <p:outputLabel value="Nome" for="nomeCad"/>
+                    <p:outputLabel value="Nome: " for="nomeCad"/>
                     <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{produtoBean.produto.nome}" />
                 </div>
                 <div class="row">
-                    <p:outputLabel value="Descrição" for="descricaoCad"/>
+                    <p:outputLabel value="Descrição: " for="descricaoCad"/>
                     <p:inputTextarea id="descricaoCad" label="descricaoCad" value="#{produtoBean.produto.descricao}" />
                 </div>
                 <div class="row">
@@ -75,7 +74,7 @@
                     </p:inputText>
                 </div>
                 <div class="row">
-                    <p:outputLabel value="Quantidade Disponível" for="qtdeDisponivelCad"/>
+                    <p:outputLabel value="Quantidade Disponível: " for="qtdeDisponivelCad"/>
                     <p:inputText id="qtdeDisponivelCad" type="text" label="qtdeDisponivelCad" value="#{produtoBean.produto.qtdeDisponivel}" />
                 </div>
 
@@ -86,7 +85,7 @@
 
         <h:form id="atualizarForm">
             <!-- Dialog Editar Produto -->
-            <p:dialog header="Editar Produto" widgetVar="dlgEditProd" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog header="Editar Produto" widgetVar="dlgEditProd" closeOnEscape="true" resizable="false">
                 <div class="row">
                     <p:outputLabel value="Código" for="codigoEdit"/>
                     <p:inputText id="codigoEdit" type="text" label="codigoEdit" value="#{produtoBean.produto.codigo}" />
@@ -123,5 +122,5 @@
             </p:confirmDialog>
         </h:form>
 
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
