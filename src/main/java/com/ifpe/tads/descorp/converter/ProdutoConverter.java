@@ -21,7 +21,8 @@ public class ProdutoConverter implements Converter{
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.isEmpty()) {
-            return (Produto) component.getAttributes().get(value);
+            Produto produtoSelecionado = (Produto) component.getAttributes().get(value);
+            return produtoSelecionado;
         }
 
         return null;

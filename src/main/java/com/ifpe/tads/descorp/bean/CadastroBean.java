@@ -10,8 +10,10 @@ import com.ifpe.tads.descorp.model.usuario.TipoUsuario;
 import com.ifpe.tads.descorp.servico.UsuarioServico;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -40,11 +42,17 @@ public class CadastroBean implements Serializable{
     
     public String cadastrarCliente(){
         
+        String retorno = "";
+        
         if(cliente.getSenha().equals(confirmacaoSenha)){
             usuarioServico.salvar(cliente);
+            retorno = "login";
+        }else{
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, null, "Senhas não conferem.");
+            FacesContext.getCurrentInstance().addMessage("", facesMessage);
         }
         
-        return "login";
+        return retorno;
     }
 
     public Cliente getCliente() {

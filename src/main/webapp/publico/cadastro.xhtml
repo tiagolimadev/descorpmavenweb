@@ -34,7 +34,7 @@
                                 <div class="col offset-s1 s6">
                                     <h:outputLabel for="dataNasc">Data Nasc.:</h:outputLabel>
                                     <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}">
-                                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                                        <f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" timeZone="America/Sao_Paulo" />
                                     </p:inputText>
                                 </div>
                             </div>

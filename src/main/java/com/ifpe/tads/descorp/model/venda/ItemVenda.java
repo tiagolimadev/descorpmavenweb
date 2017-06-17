@@ -11,12 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -24,31 +25,38 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "TB_ITEM_VENDA")
+@NamedQueries(
+    {
+        @NamedQuery(
+            name = "ItemVenda.PorIdVenda",
+            query = "SELECT i FROM ItemVenda i WHERE i.venda.id = :idVenda"
+        )
+    }
+)
 public class ItemVenda implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Min(1)
-    @Max(1000)
+    @Range(min = 1, max = 1000)
     @Column(name = "NUM_QUANTIDADE", nullable = false)
     private Integer quantidade;
     
     @DecimalMin("0.1")
-    @NotNull
+    @NotNull(message = "{itemvenda.preco.obrigatorio}")
     @Column(name = "NUM_PRECO_UNITARIO", nullable = false, scale = 2, precision = 15)
     private BigDecimal precoUnitario;
     
     @Transient
     private BigDecimal subTotal;
     
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull(message = "{itemvenda.produto.obrigatorio}")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "ID_PRODUTO", referencedColumnName = "ID")
     private Produto produto;
     
-    @NotNull
+    @NotNull(message = "{itemvenda.venda.obrigatorio}")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ID_VENDA", referencedColumnName = "ID")
     private Venda venda;

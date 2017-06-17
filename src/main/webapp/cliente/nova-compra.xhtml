@@ -35,6 +35,15 @@
                             <f:convertNumber type="currency" />
                         </h:outputText>
                     </p:column>
+                    <p:column>
+                        <p:commandButton update="form" onclick="PF('dlgConfirm').show()" icon="ui-icon-trash" title="Remover" type="button" />
+                        <p:confirmDialog message="Tem certeza que deseja remover este item?"
+                                         header="Remover Item" severity="alert"
+                                         widgetVar="dlgConfirm" closeOnEscape="true">
+                            <p:commandButton value="Sim" action="#{clienteBean.removerItem(item)}" oncomplete="PF('dlgConfirm').hide()" update="form" />
+                            <p:commandButton value="Não" onclick="PF('dlgConfirm').hide();" type="button" />
+                        </p:confirmDialog>
+                    </p:column>
                     <f:facet name="footer">
                         Total: <h:outputText value="#{clienteBean.novaVenda.valorTotal}">
                             <f:convertNumber type="currency" />
@@ -50,25 +59,26 @@
 
         <h:form id="formItem">
             <p:dialog id="dlgItem" header="Adicionar Item" widgetVar="dlgNovoItem" modal="true" closeOnEscape="true" resizable="false">
-                <p:growl id="growl" sticky="true" autoUpdate="true"/>
+                <p:growl id="growl" autoUpdate="true"/>
                 <p:outputPanel id="container">
                     <div class="row">
-                        <p:selectOneMenu value="#{clienteBean.produtoSelecionado}" converter="produtoConverter">
+                        <p:selectOneMenu id="selectProduto" value="#{clienteBean.novoItem.produto}" converter="produtoConverter">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{clienteBean.produtosDisponiveis}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" />
                             <p:ajax update="container" />
                         </p:selectOneMenu>
                     </div>
                     <div class="row">
-                        Preço: <h:outputText value="#{clienteBean.produtoSelecionado.preco}" />
+                        Preço: <h:outputText value="#{clienteBean.novoItem.produto.preco}"> <f:convertNumber type="currency" /> </h:outputText>
                     </div>
                     <div class="row">
-                        <p:outputLabel> Quantidade: <p:inputText value="#{clienteBean.novoItem.quantidade}" /> </p:outputLabel></div>
+                        <p:outputLabel> Quantidade: <p:inputText value="#{clienteBean.novoItem.quantidade}" type="number" /> </p:outputLabel></div>
                     <div>
-                        <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').close()" value="Adicionar Produto à compra" />
+                        <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').hide()" value="Adicionar Produto à compra" update="form" />
                     </div>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
+
     </h:body>
 </html>

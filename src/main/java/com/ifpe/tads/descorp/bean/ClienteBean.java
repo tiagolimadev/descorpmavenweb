@@ -16,6 +16,7 @@ import com.ifpe.tads.descorp.servico.UsuarioServico;
 import com.ifpe.tads.descorp.servico.VendaServico;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -56,8 +57,6 @@ public class ClienteBean extends BasicBean implements Serializable {
     @Valid
     private ItemVenda novoItem;
     
-    private Produto produtoSelecionado;
-    
     private List<Produto> produtosDisponiveis;
     
     @PostConstruct
@@ -93,6 +92,7 @@ public class ClienteBean extends BasicBean implements Serializable {
         String nav = "home-cliente";
         
         try{
+            novaVenda.setDataVenda(Calendar.getInstance().getTime());
             vendaServico.finalizarVenda(novaVenda);
         } catch (ExcecaoNegocio e){
             nav = "";
@@ -103,15 +103,17 @@ public class ClienteBean extends BasicBean implements Serializable {
     }
     
     public void adicionarItem(){
-        novoItem.setProduto(produtoSelecionado);
         novoItem.copiarPreco();
         novaVenda.getItensVenda().add(novoItem);
+    }
+    
+    public void removerItem(ItemVenda item){
+        novaVenda.getItensVenda().remove(item);
     }
     
     public void initNovoItem(){
         novoItem = new ItemVenda();
         novoItem.setVenda(novaVenda);
-        produtoSelecionado = new Produto();
     }
     
     public Cliente getCliente() {
@@ -152,14 +154,6 @@ public class ClienteBean extends BasicBean implements Serializable {
 
     public void setProdutosDisponiveis(List<Produto> produtosDisponiveis) {
         this.produtosDisponiveis = produtosDisponiveis;
-    }
-
-    public Produto getProdutoSelecionado() {
-        return produtoSelecionado;
-    }
-
-    public void setProdutoSelecionado(Produto produtoSelecionado) {
-        this.produtoSelecionado = produtoSelecionado;
     }
     
 }

@@ -37,7 +37,7 @@ public class VendaServico {
         for(ItemVenda item : venda.getItensVenda()){
             Produto produto = entityManager.find(Produto.class, item.getProduto().getId());
             if(item.getQuantidade() > produto.getQtdeDisponivel()){
-                throw new ExcecaoNegocio("Produto "+ produto.getNome() +"indisponível.");
+                throw new ExcecaoNegocio("Produto "+ produto.getNome() +" indisponível.");
             }
         }
             

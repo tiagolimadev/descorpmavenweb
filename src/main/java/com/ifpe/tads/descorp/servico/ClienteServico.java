@@ -6,6 +6,8 @@
 package com.ifpe.tads.descorp.servico;
 
 import com.ifpe.tads.descorp.model.usuario.Cliente;
+import com.ifpe.tads.descorp.model.venda.ItemVenda;
+import com.ifpe.tads.descorp.model.venda.Venda;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -15,6 +17,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -36,6 +39,12 @@ public class ClienteServico {
         }
         
         cliente.setVendas(cliente.getVendas());
+        
+        TypedQuery<ItemVenda> queryItems = entityManager.createNamedQuery("ItemVenda.PorIdVenda", ItemVenda.class);
+        for(Venda venda : cliente.getVendas()){
+            queryItems.setParameter("idVenda", venda.getId());
+            venda.setItensVenda(queryItems.getResultList());
+        }
         
         return cliente;
     }

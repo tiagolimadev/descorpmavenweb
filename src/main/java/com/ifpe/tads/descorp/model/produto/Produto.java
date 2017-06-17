@@ -106,14 +106,6 @@ public class Produto implements Serializable {
                 @JoinColumn(name = "ID_CATEGORIA")
             })
     private List<Categoria> categorias;
-
-    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCompra> itensCompras;
-
-    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCompra> itensVendas;
     
     public Long getId() {
         return id;
@@ -163,22 +155,6 @@ public class Produto implements Serializable {
         this.categorias = categorias;
     }
 
-    public List<ItemCompra> getItensCompras() {
-        return itensCompras;
-    }
-
-    public void setItensCompras(List<ItemCompra> itensCompras) {
-        this.itensCompras = itensCompras;
-    }
-
-    public List<ItemCompra> getItensVendas() {
-        return itensVendas;
-    }
-
-    public void setItensVendas(List<ItemCompra> itensVendas) {
-        this.itensVendas = itensVendas;
-    }
-
     public Long getQtdeDisponivel() {
         return qtdeDisponivel;
     }
@@ -196,16 +172,9 @@ public class Produto implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Produto)) {
-            return false;
-        }
-        Produto other = (Produto) object;
-
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-
-        return false;
+        return (object instanceof Produto) && (id != null) 
+             ? id.equals(((Produto) object).getId()) 
+             : (object == this);
     }
     
     @Override

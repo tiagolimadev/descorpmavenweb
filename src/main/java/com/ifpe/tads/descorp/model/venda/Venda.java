@@ -6,6 +6,7 @@ import com.ifpe.tads.descorp.model.usuario.Cliente;
 import com.ifpe.tads.descorp.model.usuario.Operador;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -65,7 +67,7 @@ public class Venda implements Serializable {
     @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID")
     private Cliente cliente;
 
-    @NotNull
+    @NotEmpty
     @OneToMany(mappedBy = "venda", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemVenda> itensVenda;
@@ -78,9 +80,9 @@ public class Venda implements Serializable {
     private Boolean cancelada;
 
     private void calcularValorTotal() {
-        BigDecimal total = new BigDecimal(0);
+        BigDecimal total = new BigDecimal("0");
         for (ItemVenda item : this.itensVenda) {
-            total.add(item.getSubTotal());
+            total = total.add(item.getSubTotal());
         }
         this.valorTotal = total;
     }
