@@ -8,6 +8,15 @@
         <el-resolver>
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
         </el-resolver>
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>pt_BR</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>translations.translate</base-name>
+            <var>translate</var>
+        </resource-bundle>
     </application>
     <factory>
         <exception-handler-factory>
@@ -42,11 +51,6 @@
         <navigation-case>
             <from-outcome>listarProdutos</from-outcome>
             <to-view-id>/adm/listar-produtos.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>listarOperadores</from-outcome>
-            <to-view-id>/adm/listar-operadores.xhtml</to-view-id>
             <redirect />
         </navigation-case>
         <navigation-case>

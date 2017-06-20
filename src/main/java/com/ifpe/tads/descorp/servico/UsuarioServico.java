@@ -6,6 +6,7 @@
 package com.ifpe.tads.descorp.servico;
 
 import com.ifpe.tads.descorp.model.usuario.Usuario;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -15,6 +16,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,18 +29,36 @@ import static javax.persistence.PersistenceContextType.TRANSACTION;
 public class UsuarioServico {
 
     @PersistenceContext(name = "descorp", type = TRANSACTION)
-    protected EntityManager entityManager;
+    protected EntityManager em;
     
-    public Usuario getUsuarioPorId(Long id){
-        return entityManager.find(Usuario.class, id);
+    public List<Usuario> getUsuarios() {
+        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.ListarTodos", Usuario.class);
+        return query.getResultList();
     }
     
-    public void salvar(Usuario usuario){
-        entityManager.persist(usuario);
+    public List<Usuario> getUsuariosPorTipo(String tipo) {
+        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.PorTipo", Usuario.class);
+        query.setParameter("tipo", tipo);
+        return query.getResultList();
     }
     
-    public void editar(Usuario usuario){
-        entityManager.merge(usuario);
+    public Usuario getUsuarioPorId(Long id) {
+        return em.find(Usuario.class, id);
+    }
+    
+    public void salvar(Usuario usuario) {
+        em.persist(usuario);
+    }
+    
+    public void atualizar(Usuario usuario) {
+        em.merge(usuario);
+    }
+    
+    public void remover(Usuario usuario) {
+        if (!em.contains(usuario)) {
+            usuario = em.merge(usuario);
+        }
+        em.remove(usuario);
     }
     
 }
