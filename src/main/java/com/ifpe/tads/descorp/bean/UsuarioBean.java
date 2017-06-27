@@ -32,7 +32,8 @@ public class UsuarioBean implements Serializable {
     private Usuario usuario;
     private UsuarioFactory factory;
     private List<Usuario> listaUsuarios;
-    private TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuarioSelecionado;
+    private TipoUsuario[] tiposUsuario;
     private int linhas;
     
     @PostConstruct
@@ -44,7 +45,7 @@ public class UsuarioBean implements Serializable {
     public UsuarioBean() {}
     
     public void initUsuario() {
-        this.usuario = factory.getUsuario(this.tipoUsuario.toString());
+        this.usuario = factory.getUsuario(this.tipoUsuarioSelecionado.toString());
     }
     
     public void selecionarUsuario(Usuario usuario) {
@@ -53,10 +54,6 @@ public class UsuarioBean implements Serializable {
     
     public void listarUsuarios() {
         this.listaUsuarios = usuarioServico.getUsuarios();
-    }
-    
-    public TipoUsuario[] getTiposUsuario() {
-        return TipoUsuario.values();
     }
     
     public void cadastrarUsuario() {
@@ -77,6 +74,14 @@ public class UsuarioBean implements Serializable {
     public Usuario getUsuario() {
         return usuario;
     }
+    
+    public void setTiposUsuario(TipoUsuario[] tiposUsuario) {
+        this.tiposUsuario = tiposUsuario;
+    }
+
+    public TipoUsuario[] getTiposUsuario() {
+        return TipoUsuario.values();
+    }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -89,13 +94,13 @@ public class UsuarioBean implements Serializable {
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
+    
+    public TipoUsuario getTipoUsuarioSelecionado() {
+        return tipoUsuarioSelecionado;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setTipoUsuarioSelecionado(TipoUsuario tipoUsuarioSelecionado) {
+        this.tipoUsuarioSelecionado = tipoUsuarioSelecionado;
     }
 
     public int getLinhas() {

@@ -13,10 +13,10 @@
 
             <!-- Button Add Usuario -->
             <p:panelGrid id="addUsuario">
-                <h:selectOneMenu id="tiposUsuario" value="#{usuarioBean.tiposUsuario}">
-                    <f:selectItems value="#{usuarioBean.tipoUsuario}"/>
+                <h:selectOneMenu id="tiposUsuario" value="#{usuarioBean.tipoUsuarioSelecionado}">
+                    <f:selectItems value="#{usuarioBean.tiposUsuario}" var="tipoUsuario" itemValue="#{tipoUsuario}" />
                 </h:selectOneMenu>
-                <p:commandButton action="#{usuarioBean.initUsuario()}" oncomplete="PF('dlgCadUsuario').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_user}" update="formCadastrar" immediate="true" process="@this" />
+                <p:commandButton action="#{usuarioBean.initUsuario}" oncomplete="PF('dlgCadUsuario').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_user}" update="formCadastrar" immediate="true" process="@parent" />
             </p:panelGrid>
 
             <!-- Form Datatable -->
@@ -27,7 +27,7 @@
                     <f:facet name="header">
                         <p:panelGrid>
                             #{translate.label_user_list}
-                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" process="@this" />
+                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" process="@form" />
                             <p:columnToggler datasource="listaUsuarios" trigger="toggler" />
                         </p:panelGrid>
                     </f:facet>
@@ -56,7 +56,7 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="#{translate.label_actions}">
-                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('dlgEditUsuario').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" process="@this" />
+                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('dlgEditUsuario').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" process="@form" />
                         <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('confRemUsuario').show();" value="#{translate.label_delete}" icon="fa fa-fw fa-remove" />
                     </p:column>
                 </p:dataTable>
@@ -94,7 +94,7 @@
                                     promptLabel="#{translate.label_prompt_password}" weakLabel="#{translate.label_weak_password}" goodLabel="#{translate.label_good_password}" strongLabel="#{translate.label_strong_password}"></p:password>
                     </p:panelGrid>
                     <p:panelGrid columns="2">
-                        <p:commandButton action="#{usuarioBean.cadastrarUsuario()}" oncomplete="PF('dlgCadUsuario').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaUsuariosForm" process="@this" />
+                        <p:commandButton action="#{usuarioBean.cadastrarUsuario()}" oncomplete="PF('dlgCadUsuario').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaUsuariosForm" process="@form" />
                         <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgCadUsuario').hide();" type="button" />
                     </p:panelGrid>
                 </p:fieldset>
