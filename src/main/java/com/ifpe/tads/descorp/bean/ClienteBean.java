@@ -104,7 +104,7 @@ public class ClienteBean extends BasicBean implements Serializable {
     
     public String editarUsuario(){
         
-        usuarioServico.editar(cliente);
+        usuarioServico.atualizar(cliente);
         
         return "home-cliente";
     }

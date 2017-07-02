@@ -7,6 +7,61 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/layout/template.xhtml">
     <ui:define name="conteudo">
+
+        <h:form id="listaUsuariosForm">
+            <p:growl id="growl" autoUpdate="true" />
+
+            <!-- Button Add Usuario -->
+            <p:panelGrid id="addUsuario">
+                <h:selectOneMenu id="tiposUsuario" value="#{usuarioBean.tipoUsuarioSelecionado}">
+                    <f:selectItems value="#{usuarioBean.tiposUsuario}" var="tipoUsuario" itemValue="#{tipoUsuario}" />
+                </h:selectOneMenu>
+                <p:commandButton action="#{usuarioBean.initUsuario}" oncomplete="PF('dlgCadUsuario').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_user}" update="formCadastrar" immediate="true" process="@parent" />
+            </p:panelGrid>
+
+            <!-- Form Datatable -->
+            <p:panelGrid id="formDatatable" columns="2">
+                <p:dataTable id="listaUsuarios" value="#{usuarioBean.listaUsuarios}" var="usuario" rowKey="#{usuario.id}"
+                             paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             rows="#{usuarioBean.linhas}">
+                    <f:facet name="header">
+                        <p:panelGrid>
+                            #{translate.label_user_list}
+                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" process="@form" />
+                            <p:columnToggler datasource="listaUsuarios" trigger="toggler" />
+                        </p:panelGrid>
+                    </f:facet>
+
+                    <p:column headerText="#{translate.label_name}" sortBy="#{usuario.nome}">
+                        <h:outputText value="#{usuario.nome}" />
+                    </p:column>
+                    <p:column headerText="#{translate.label_email}" sortBy="#{usuario.email}">
+                        <h:outputText value="#{usuario.email}" />
+                    </p:column>
+                    <p:column headerText="#{translate.label_login}" filterBy="#{usuario.login}">
+                        <h:outputText value="#{usuario.login}" />
+                    </p:column>
+                    <p:column headerText="#{translate.label_password}" sortBy="#{usuario.senha}">
+                        <h:outputText value="#{usuario.senha}">
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{translate.label_cpf}" sortBy="#{usuario.cpf}">
+                        <h:outputText value="#{usuario.cpf}">
+                            <f:converter converterId="CPFConverter" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{translate.label_birthday}" sortBy="#{usuario.dataNascimento}">
+                        <h:outputText value="#{usuario.dataNascimento}">
+                            <f:converter converterId="DataNascConverter" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{translate.label_actions}">
+                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('dlgEditUsuario').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" process="@form" />
+                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('confRemUsuario').show();" value="#{translate.label_delete}" icon="fa fa-fw fa-remove" />
+                    </p:column>
+                </p:dataTable>
+
+            </p:panelGrid>
         <h:form id="usuariosForm">
 
             <div class="row">
@@ -47,5 +102,85 @@
             </p:dialog> 
 
         </h:form>
+
+            <!-- Dialog Cadastrar Usuario -->
+            <p:dialog header="#{translate.label_register_user}" widgetVar="dlgCadUsuario" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
+        <h:form id="formCadastrar">
+            <p:fieldset legend="#{translate.label_new_user}" toggleable="true">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="nomeCad">#{translate.label_name}</h:outputLabel>
+                        <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{usuarioBean.usuario.nome}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="emailCad">#{translate.label_email}</h:outputLabel>
+                        <p:inputText id="emailCad" type="email" label="emailCad" value="#{usuarioBean.usuario.email}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="cpfCad">#{translate.label_cpf}</h:outputLabel>
+                        <p:inputMask id="cpfCad" mask="999.999.999-99" label="cpfCad" value="#{usuarioBean.usuario.cpf}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="dataNascCad">#{translate.label_birthday}</h:outputLabel>
+                        <p:calendar id="dataNascCad" label="dataNascCad" pattern="dd/MM/yyyy" mask="true" value="#{usuarioBean.usuario.dataNascimento}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="loginCad">#{translate.label_login}</h:outputLabel>
+                        <p:inputText id="loginCad" type="text" label="loginCad" value="#{usuarioBean.usuario.login}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <h:outputLabel for="senhaCad">#{translate.label_password}</h:outputLabel>
+                        <p:password id="senhaCad" label="senhaCad" value="#{usuarioBean.usuario.senha}" feedback="true" inline="true"
+                                    promptLabel="#{translate.label_prompt_password}" weakLabel="#{translate.label_weak_password}" goodLabel="#{translate.label_good_password}" strongLabel="#{translate.label_strong_password}"></p:password>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <p:commandButton action="#{usuarioBean.cadastrarUsuario()}" oncomplete="PF('dlgCadUsuario').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaUsuariosForm" process="@form" />
+                        <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgCadUsuario').hide();" type="button" />
+                    </p:panelGrid>
+                </p:fieldset>
+        </h:form>
+            </p:dialog>
+
+        <h:form id="atualizarForm">
+            <!-- Dialog Editar Usuario -->
+            <p:dialog header="#{translate.label_edit_user}" widgetVar="dlgEditUsuario" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
+                <div class="row">
+                    <h:outputLabel for="nomeEdit">#{translate.label_name}</h:outputLabel>
+                    <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{usuarioBean.usuario.nome}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="emailEdit">#{translate.label_edit}</h:outputLabel>
+                    <p:inputText id="emailEdit" type="email" label="emailEdit" value="#{usuarioBean.usuario.email}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="cpfEdit">#{translate.label_cpf}</h:outputLabel>
+                    <p:inputMask id="cpfEdit" mask="999.999.999-99" label="cpfEdit" value="#{usuarioBean.usuario.cpf}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="dataNascEdit">#{translate.label_birthday}</h:outputLabel>
+                    <p:calendar id="dataNascEdit" label="dataNascEdit" pattern="dd/MM/yyyy" mask="true" value="#{usuarioBean.usuario.dataNascimento}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="loginEdit">#{translate.label_login}</h:outputLabel>
+                    <p:inputText id="loginEdit" type="text" label="loginEdit" value="#{usuarioBean.usuario.login}" />
+                </div>
+                <div class="row">
+                    <h:outputLabel for="senhaEdit">#{translate.label_password}</h:outputLabel>
+                    <p:password id="senhaEdit" label="senhaEdit" value="#{usuarioBean.usuario.senha}"  feedback="true"
+                                promptLabel="#{translate.label_prompt_password}" weakLabel="#{translate.label_weak_password}" goodLabel="#{translate.label_good_password}" strongLabel="#{translate.label_strong_password}"></p:password>
+                </div>
+                <p:commandButton action="#{usuarioBean.atualizarUsuario()}" oncomplete="PF('dlgEditUsuario').hide();" value="#{translate.label_update}" icon="fa fa-fw fa-edit" update="listaUsuariosForm" />
+                <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgEditUsuario').hide();" type="button" />
+            </p:dialog>
+        </h:form>
+        <h:form id="removerForm">
+            <!-- ConfirmDialog Remoção de Usuario -->
+            <p:confirmDialog message="#{translate.label_confirm_remove_user}"
+                             header="#{translate.label_header_remove_user}" severity="alert"
+                             widgetVar="confRemUsuario" closeOnEscape="true" appendTo="@(body)">
+                <p:commandButton value="#{translate.label_yes}" action="#{usuarioBean.removerUsuario()}" oncomplete="PF('confRemUsuario').hide()" update="listaUsuariosForm" />
+                <p:commandButton value="#{translate.label_no}" onclick="PF('confRemUsuario').hide();" type="button" />
+            </p:confirmDialog>
+        </h:form>
+
     </ui:define>
 </ui:composition>

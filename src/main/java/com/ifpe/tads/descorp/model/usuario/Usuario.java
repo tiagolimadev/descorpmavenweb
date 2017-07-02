@@ -67,7 +67,7 @@ import org.hibernate.validator.constraints.br.CPF;
                     query = "SELECT u FROM Usuario u WHERE u.tipo = :tipo"
             ),
             @NamedQuery(
-                    name = "Usuario.listarTodos",
+                    name = "Usuario.ListarTodos",
                     query = "SELECT u FROM Usuario u ORDER BY u.nome"
             )
         }
@@ -119,7 +119,7 @@ public abstract class Usuario implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "TP_USUARIO")
+    @Column(name = "TXT_TIPO_USUARIO")
     private TipoUsuario tipo;
     
     private void calcularIdade() {

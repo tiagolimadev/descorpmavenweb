@@ -9,24 +9,19 @@
         <h:form id="menuForm">
             <p:growl id="messages"/>
             <p:menubar>
-                <p:menuitem value="Home" url="http://localhost:8080/descorpmavenweb/" icon="fa fa-fw fa-home" />
+                <p:menuitem value="#{translate.label_home}" url="http://localhost:8080/descorpmavenweb/" icon="fa fa-fw fa-home" />
                 
-                <p:submenu label="Usuários" icon="fa fa-fw fa-users">
-                    <p:submenu label="Gerenciar" icon="fa fa-fw fa-list-alt">
-                        <p:menuitem value="Usuários" outcome="gerenciarUsuarios" />
-                        <p:menuitem value="Operadores" outcome="listarOperadores" />
-                    </p:submenu>
-                </p:submenu>
+                <p:menuitem value="#{translate.label_users}" icon="fa fa-fw fa-users" outcome="gerenciarUsuarios" />
 
-                <p:submenu label="Produtos" icon="fa fa-fw fa-tags">
-                    <p:submenu label="Gerenciar" icon="fa fa-fw fa-list-alt">
-                        <p:menuitem value="Produtos" outcome="listarProdutos" />
-                        <p:menuitem value="Categorias" outcome="listarCategorias" />
+                <p:submenu label="#{translate.label_products}" icon="fa fa-fw fa-tags">
+                    <p:submenu label="#{translate.label_manager}" icon="fa fa-fw fa-list-alt">
+                        <p:menuitem value="#{translate.label_products}" outcome="listarProdutos" />
+                        <p:menuitem value="#{translate.label_categories}" outcome="listarCategorias" />
                     </p:submenu>
                 </p:submenu>
                 
                 <f:facet name="options">
-                    <p:commandButton type="button" value="Logout" icon="fa fa-fw fa-sign-out" />
+                    <p:commandButton type="button" value="#{translate.label_logout}" icon="fa fa-fw fa-sign-out" />
                 </f:facet>
             </p:menubar>
         </h:form>

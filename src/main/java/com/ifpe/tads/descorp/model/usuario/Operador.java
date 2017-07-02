@@ -26,6 +26,7 @@ public class Operador extends Usuario implements Serializable {
     private List<Venda> vendas;
 
     public Operador() {
+        super();
         super.setTipo(TipoUsuario.OPERADOR);
     }
     
