@@ -69,7 +69,7 @@ public class ClienteBean extends BasicBean implements Serializable {
     public String initHistorico(){
         String resultado = "";
         
-        cliente = clienteServico.getHistorico(cliente);
+        cliente.setVendas(clienteServico.getHistorico(cliente));
         
         resultado = "historico-cliente";
         

@@ -44,7 +44,7 @@ import org.hibernate.validator.constraints.NotEmpty;
         ),
         @NamedQuery(
             name = "Venda.PorCliente",
-            query = "SELECT v FROM Venda v WHERE v.cliente.id = :clienteId"
+            query = "SELECT v FROM Venda v INNER JOIN FETCH ItemVenda item WHERE v.cliente.id = :clienteId AND item.venda.id = v.id GROUP BY v.id"
         )
     }
 )

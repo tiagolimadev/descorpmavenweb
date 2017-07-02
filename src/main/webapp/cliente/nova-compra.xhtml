@@ -91,7 +91,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 center-align">
-                            <p:commandButton action="#{clienteBean.adicionarItem()}" oncomplete="PF('dlgNovoItem').hide()" value="Adicionar Produto à compra" update="form" />
+                            <p:commandButton action="#{clienteBean.adicionarItem()}" onsuccess="PF('dlgNovoItem').hide()" value="Adicionar Produto à compra" update="form" />
                         </div>
                     </div>
                 </p:outputPanel>

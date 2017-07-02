@@ -40,6 +40,7 @@ public class ItemVenda implements Serializable {
     private Long id;
     
     @Range(min = 1, max = 1000)
+    @NotNull(message = "{itemvenda.quantidade.obrigatorio}")
     @Column(name = "NUM_QUANTIDADE", nullable = false)
     private Integer quantidade;
     
@@ -123,20 +124,6 @@ public class ItemVenda implements Serializable {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
-    }
-    
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ItemVenda)) {
-            return false;
-        }
-        ItemVenda other = (ItemVenda) object;
-        
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        
-        return false;
     }
     
     @Override
