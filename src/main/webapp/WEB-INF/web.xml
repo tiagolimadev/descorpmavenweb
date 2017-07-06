@@ -20,17 +20,17 @@
         <extension>otf</extension>
         <mime-type>font/opentype</mime-type>
     </mime-mapping>
-    <mime-mapping> 
+    <mime-mapping>
         <extension>ttf</extension>
         <mime-type>application/x-font-ttf</mime-type>
     </mime-mapping>
-    <mime-mapping> 
+    <mime-mapping>
         <extension>woff</extension>
-        <mime-type>application/x-font-woff</mime-type>  
+        <mime-type>application/x-font-woff</mime-type>
     </mime-mapping>
-    <mime-mapping> 
+    <mime-mapping>
         <extension>woff2</extension>
-        <mime-type>application/x-font-woff2</mime-type>  
+        <mime-type>application/x-font-woff2</mime-type>
     </mime-mapping>
     <mime-mapping>
         <extension>svg</extension>
@@ -50,7 +50,23 @@
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.xhtml</location>
+    </error-page>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>saltRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/index.xhtml</form-login-page>
+            <form-error-page>/index.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
 </web-app>

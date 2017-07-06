@@ -1,7 +1,12 @@
 package com.ifpe.tads.descorp.model.usuario;
 
+import com.ifpe.tads.descorp.acesso.Grupo;
 import com.ifpe.tads.descorp.model.endereco.Endereco;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,21 +19,24 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -121,6 +129,24 @@ public abstract class Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "TXT_TIPO_USUARIO")
     private TipoUsuario tipo;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "TB_USUARIO_GRUPO", joinColumns = {
+        @JoinColumn(name = "ID_USUARIO")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "ID_GRUPO")})
+    private List<Grupo> grupos;
+    
+    @PrePersist
+    public void gerarHash() {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(senha.getBytes(Charset.forName("UTF-8")));
+            setSenha(Base64.getEncoder().encodeToString(digest.digest()));
+        } catch (NoSuchAlgorithmException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
     
     private void calcularIdade() {
         Calendar nascimento = new GregorianCalendar();
@@ -217,6 +243,14 @@ public abstract class Usuario implements Serializable {
         this.idade = idade;
     }
 
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
