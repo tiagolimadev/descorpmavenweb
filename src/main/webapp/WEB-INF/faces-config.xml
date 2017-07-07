@@ -45,7 +45,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>listarCategorias</from-outcome>
-            <to-view-id>/publico/listarCategorias.xhtml</to-view-id>
+            <to-view-id>/adm/listar-categorias.xhtml</to-view-id>
             <redirect />
         </navigation-case>
         <navigation-case>

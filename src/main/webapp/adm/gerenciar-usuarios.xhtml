@@ -16,7 +16,7 @@
                 <h:selectOneMenu id="tiposUsuario" value="#{usuarioBean.tipoUsuarioSelecionado}">
                     <f:selectItems value="#{usuarioBean.tiposUsuario}" var="tipoUsuario" itemValue="#{tipoUsuario}" />
                 </h:selectOneMenu>
-                <p:commandButton action="#{usuarioBean.initUsuario}" oncomplete="PF('dlgCadUsuario').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_user}" update="formCadastrar" immediate="true" process="@parent" />
+                <p:commandButton action="#{usuarioBean.initUsuario}" oncomplete="PF('dlgCadUsuario').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_user}" update="formCadastrar" immediate="true" />
             </p:panelGrid>
 
             <!-- Form Datatable -->
@@ -27,7 +27,7 @@
                     <f:facet name="header">
                         <p:panelGrid>
                             #{translate.label_user_list}
-                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" process="@form" />
+                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" />
                             <p:columnToggler datasource="listaUsuarios" trigger="toggler" />
                         </p:panelGrid>
                     </f:facet>
@@ -56,12 +56,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="#{translate.label_actions}">
-                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('dlgEditUsuario').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" process="@form" />
+                        <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('dlgEditUsuario').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" />
                         <p:commandButton action="#{usuarioBean.selecionarUsuario(usuario)}" oncomplete="PF('confRemUsuario').show();" value="#{translate.label_delete}" icon="fa fa-fw fa-remove" />
                     </p:column>
                 </p:dataTable>
 
             </p:panelGrid>
+        </h:form>
         <h:form id="usuariosForm">
 
             <div class="row">
@@ -104,45 +105,43 @@
         </h:form>
 
             <!-- Dialog Cadastrar Usuario -->
-            <p:dialog header="#{translate.label_register_user}" widgetVar="dlgCadUsuario" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
-        <h:form id="formCadastrar">
-            <p:fieldset legend="#{translate.label_new_user}" toggleable="true">
-                    <p:panelGrid columns="2">
+            <p:dialog header="#{translate.label_register_user}" widgetVar="dlgCadUsuario" closeOnEscape="true" resizable="false">
+                <h:form id="formCadastrar">
+                    <div>
                         <h:outputLabel for="nomeCad">#{translate.label_name}</h:outputLabel>
                         <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{usuarioBean.usuario.nome}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
+                    </div>
+                    <div>
                         <h:outputLabel for="emailCad">#{translate.label_email}</h:outputLabel>
                         <p:inputText id="emailCad" type="email" label="emailCad" value="#{usuarioBean.usuario.email}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
+                    </div>
+                    <div>
                         <h:outputLabel for="cpfCad">#{translate.label_cpf}</h:outputLabel>
                         <p:inputMask id="cpfCad" mask="999.999.999-99" label="cpfCad" value="#{usuarioBean.usuario.cpf}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
+                    </div>
+                    <div>
                         <h:outputLabel for="dataNascCad">#{translate.label_birthday}</h:outputLabel>
                         <p:calendar id="dataNascCad" label="dataNascCad" pattern="dd/MM/yyyy" mask="true" value="#{usuarioBean.usuario.dataNascimento}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
+                    </div>
+                    <div>
                         <h:outputLabel for="loginCad">#{translate.label_login}</h:outputLabel>
                         <p:inputText id="loginCad" type="text" label="loginCad" value="#{usuarioBean.usuario.login}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
+                    </div>
+                    <div>
                         <h:outputLabel for="senhaCad">#{translate.label_password}</h:outputLabel>
                         <p:password id="senhaCad" label="senhaCad" value="#{usuarioBean.usuario.senha}" feedback="true" inline="true"
                                     promptLabel="#{translate.label_prompt_password}" weakLabel="#{translate.label_weak_password}" goodLabel="#{translate.label_good_password}" strongLabel="#{translate.label_strong_password}"></p:password>
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">
-                        <p:commandButton action="#{usuarioBean.cadastrarUsuario()}" oncomplete="PF('dlgCadUsuario').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaUsuariosForm" process="@form" />
+                    </div>
+                    <div>
+                        <p:commandButton action="#{usuarioBean.cadastrarUsuario()}" oncomplete="PF('dlgCadUsuario').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaUsuariosForm" />
                         <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgCadUsuario').hide();" type="button" />
-                    </p:panelGrid>
-                </p:fieldset>
-        </h:form>
+                    </div>
+                </h:form>
             </p:dialog>
 
         <h:form id="atualizarForm">
             <!-- Dialog Editar Usuario -->
-            <p:dialog header="#{translate.label_edit_user}" widgetVar="dlgEditUsuario" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)">
+            <p:dialog header="#{translate.label_edit_user}" widgetVar="dlgEditUsuario" closeOnEscape="true" resizable="false">
                 <div class="row">
                     <h:outputLabel for="nomeEdit">#{translate.label_name}</h:outputLabel>
                     <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{usuarioBean.usuario.nome}" />
@@ -176,7 +175,7 @@
             <!-- ConfirmDialog Remoção de Usuario -->
             <p:confirmDialog message="#{translate.label_confirm_remove_user}"
                              header="#{translate.label_header_remove_user}" severity="alert"
-                             widgetVar="confRemUsuario" closeOnEscape="true" appendTo="@(body)">
+                             widgetVar="confRemUsuario" closeOnEscape="true">
                 <p:commandButton value="#{translate.label_yes}" action="#{usuarioBean.removerUsuario()}" oncomplete="PF('confRemUsuario').hide()" update="listaUsuariosForm" />
                 <p:commandButton value="#{translate.label_no}" onclick="PF('confRemUsuario').hide();" type="button" />
             </p:confirmDialog>

@@ -32,7 +32,7 @@ public class AdministradorServico {
     protected EntityManager entityManager;
     
     public List<Usuario> listarUsuarios(){
-        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.listarTodos", Usuario.class);
+        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.ListarTodos", Usuario.class);
         return query.getResultList();
     }
     

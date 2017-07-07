@@ -42,10 +42,12 @@ public class UsuarioBean implements Serializable {
         this.linhas = 10;
     }
     
-    public UsuarioBean() {}
+    public UsuarioBean() {
+        this.factory = new UsuarioFactory();
+    }
     
     public void initUsuario() {
-        this.usuario = factory.getUsuario(this.tipoUsuarioSelecionado.toString());
+        usuario = factory.getUsuario(tipoUsuarioSelecionado.toString());
     }
     
     public void selecionarUsuario(Usuario usuario) {

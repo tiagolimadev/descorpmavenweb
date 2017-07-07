@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>GerenciaWeb | Listar Categorias</title>
-        <link rel="stylesheet" href="../css/materialize.min.css" />
-        <link rel="stylesheet" href="../css/custom.css" />
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
 
         <h:form id="listaCategoriasForm">
 
@@ -39,7 +37,7 @@
 
         <h:form id="formCadastrar">
             <!-- Dialog Cadastrar Categoria -->
-            <p:dialog header="Cadastrar Categoria" widgetVar="dlgCadCat" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog header="Cadastrar Categoria" widgetVar="dlgCadCat" closeOnEscape="true" resizable="false">
 
                 <div class="row">
                     <p:outputLabel value="Nome" for="nomeCad"/>
@@ -53,12 +51,12 @@
 
         <h:form id="atualizarForm">
             <!-- Dialog Editar Categoria -->
-            <p:dialog header="Editar Categoria" widgetVar="dlgEditCat" modal="true" closeOnEscape="true" resizable="false">
+            <p:dialog header="Editar Categoria" widgetVar="dlgEditCat" closeOnEscape="true" resizable="false">
                 <div class="row">
                     <p:outputLabel value="Nome" for="nomeEdit"/>
                     <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{categoriaBean.categoria.nome}" />
                 </div>
-                <p:commandButton action="#{categoriaBean.atualizarCategoria()}" oncomplete="PF('dlgCadCat').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
+                <p:commandButton action="#{categoriaBean.atualizarCategoria()}" oncomplete="PF('dlgEditCat').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
                 <p:commandButton value="Cancelar" onclick="PF('dlgEditCat').hide();" type="button" />
             </p:dialog>
         </h:form>
@@ -72,5 +70,5 @@
             </p:confirmDialog>
         </h:form>
 
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
