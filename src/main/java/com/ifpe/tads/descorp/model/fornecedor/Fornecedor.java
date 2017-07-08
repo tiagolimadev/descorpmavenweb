@@ -26,6 +26,10 @@ import org.hibernate.validator.constraints.NotBlank;
         @NamedQuery(
             name = "Fornecedor.PorNome",
             query = "SELECT f FROM Fornecedor f WHERE f.nome LIKE :nome ORDER BY f.id"
+        ),
+        @NamedQuery(
+            name = "Fornecedor.ListarTodos",
+            query = "SELECT f FROM Fornecedor f ORDER BY f.nome"
         )
     }
 )

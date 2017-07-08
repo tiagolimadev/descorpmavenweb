@@ -59,6 +59,11 @@
             <redirect />
         </navigation-case>
         <navigation-case>
+            <from-outcome>listarFornecedores</from-outcome>
+            <to-view-id>/adm/listar-fornecedores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
             <from-outcome>editar-perfil</from-outcome>
             <to-view-id>/cliente/editar-perfil.xhtml</to-view-id>
             <redirect />

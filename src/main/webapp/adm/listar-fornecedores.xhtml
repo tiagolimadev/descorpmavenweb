@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/template.xhtml">
+    <ui:define name="conteudo">
+
+        <h:form id="listaFornecedoresForm">
+
+            <p:growl id="growl" autoUpdate="true" />
+            
+            <!-- Button Add Fornecedor -->
+            <p:panelGrid id="addForn">
+                <p:commandButton action="#{fornecedorBean.initFornecedor()}" oncomplete="PF('dlgCadForn').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_supplier}" update="formCadastrar" immediate="true" />
+            </p:panelGrid>
+
+            <!-- Form Datatable -->
+            <p:panelGrid id="formDatatable" columns="2">
+
+                <p:dataTable id="listaFornecedores" value="#{fornecedorBean.listaFornecedores}" var="fornecedor" rowKey="#{fornecedor.id}"
+                             paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             rows="#{fornecedorBean.linhas}">
+                    <f:facet name="header">
+                        <p:panelGrid>
+                            #{translate.label_user_list}
+                            <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="listaFornecedores" trigger="toggler" />
+                        </p:panelGrid>
+                    </f:facet>
+                    <p:column headerText="#{translate.label_name}" sortBy="#{fornecedor.nome}">
+                        <h:outputText value="#{fornecedor.nome}" />
+                    </p:column>
+                    <p:column headerText="#{translate.label_description}" sortBy="#{fornecedor.descricao}">
+                        <h:outputText value="#{fornecedor.descricao}" />
+                    </p:column>
+                    <p:column headerText="#{translate.label_actions}">
+                        <p:commandButton action="#{fornecedorBean.selecionarFornecedor(fornecedor)}" oncomplete="PF('dlgEditForn').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" />
+                        <p:commandButton action="#{fornecedorBean.selecionarFornecedor(fornecedor)}" oncomplete="PF('confRemForn').show();" value="#{translate.label_delete}" icon="fa fa-fw fa-remove" />
+                    </p:column>
+                </p:dataTable>
+
+            </p:panelGrid>
+        </h:form>
+
+        <h:form id="formCadastrar">
+            <!-- Dialog Cadastrar Fornecedor -->
+            <p:dialog header="#{translate.label_register_supplier}" widgetVar="dlgCadForn" closeOnEscape="true" resizable="false">
+
+                <div class="row">
+                    <p:outputLabel value="#{translate.label_name}" for="nomeCad"/>
+                    <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{fornecedorBean.fornecedor.nome}" />
+                </div>
+                
+                <div class="row">
+                    <p:outputLabel value="#{translate.label_description}" for="descricaoCad"/>
+                    <p:inputText id="descricaoCad" type="text" label="descricaoCad" value="#{fornecedorBean.fornecedor.descricao}" />
+                </div>
+
+                <p:commandButton action="#{fornecedorBean.cadastrarFornecedor()}" oncomplete="PF('dlgCadForn').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaFornecedoresForm" />
+                <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgCadForn').hide();" type="button" />
+            </p:dialog>
+        </h:form>
+
+        <h:form id="atualizarForm">
+            <!-- Dialog Editar Fornecedor -->
+            <p:dialog header="#{translate.label_edit_supplier}" widgetVar="dlgEditForn" closeOnEscape="true" resizable="false">
+                
+                <div class="row">
+                    <p:outputLabel value="#{translate.label_name}" for="nomeEdit"/>
+                    <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{fornecedorBean.fornecedor.nome}" />
+                </div>
+                
+                <div class="row">
+                    <p:outputLabel value="#{translate.label_description}" for="descricaoEdit"/>
+                    <p:inputText id="descricaoEdit" type="text" label="descricaoEdit" value="#{fornecedorBean.fornecedor.descricao}" />
+                </div>
+                
+                <p:commandButton action="#{fornecedorBean.atualizarFornecedor()}" oncomplete="PF('dlgEditForn').hide();" value="#{translate.label_update}" icon="fa fa-fw fa-edit" update="listaFornecedoresForm" />
+                <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgEditForn').hide();" type="button" />
+            </p:dialog>
+        </h:form>
+        <h:form id="removerForm">
+            <!-- ConfirmDialog Remoção de fornecedor -->
+            <p:confirmDialog message="#{translate.label_confirm_remove_supplier}"
+                             header="#{translate.label_header_remove_supplier}" severity="alert"
+                             widgetVar="confRemForn" closeOnEscape="true">
+                <p:commandButton value="#{translate.label_yes}" action="#{fornecedorBean.removerFornecedor()}" oncomplete="PF('confRemForn').hide()" update="listaFornecedoresForm" />
+                <p:commandButton value="#{translate.label_no}" onclick="PF('confRemForn').hide();" type="button" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
