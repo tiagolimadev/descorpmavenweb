@@ -41,7 +41,7 @@ public class LoginBean implements Serializable {
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             request.login(login, senha);
             facesContext.getExternalContext().getSession(true);
-            retorno = "sucesso";
+            retorno = "gerenciarUsuarios";
         } catch (ServletException ex) {
             setLogin(null);
             adicionarMensagem("Login e/ou senha incorretos.");

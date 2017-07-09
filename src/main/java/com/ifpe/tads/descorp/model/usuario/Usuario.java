@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -102,11 +103,16 @@ public abstract class Usuario implements Serializable {
     @Size(min = 4, max = 12)
     @Column(name = "TXT_LOGIN", unique = true)
     private String login;
+    
+    @Size(max = 45)
+    @Column(name = "TXT_SAL")
+    private String sal;
 
     @NotBlank(message = "{usuario.senha.obrigatorio}")
     @Size(min = 8, max = 16)
     @Column(name = "TXT_SENHA")
     private String senha;
+    
 
     @CPF
     @NotBlank(message = "{usuario.cpf.obrigatorio}")
@@ -140,12 +146,21 @@ public abstract class Usuario implements Serializable {
     @PrePersist
     public void gerarHash() {
         try {
+            gerarSal();
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            setSenha(sal + senha);
             digest.update(senha.getBytes(Charset.forName("UTF-8")));
             setSenha(Base64.getEncoder().encodeToString(digest.digest()));
         } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    private void gerarSal() throws NoSuchAlgorithmException {
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        byte[] randomBytes = new byte[32];
+        secureRandom.nextBytes(randomBytes);
+        setSal(Base64.getEncoder().encodeToString(randomBytes));
     }
     
     private void calcularIdade() {
@@ -249,6 +264,14 @@ public abstract class Usuario implements Serializable {
 
     public void setGrupos(List<Grupo> grupos) {
         this.grupos = grupos;
+    }
+
+    public String getSal() {
+        return sal;
+    }
+
+    public void setSal(String sal) {
+        this.sal = sal;
     }
     
     @Override
