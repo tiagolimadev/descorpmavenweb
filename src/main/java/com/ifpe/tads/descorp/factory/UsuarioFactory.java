@@ -19,13 +19,13 @@ import com.ifpe.tads.descorp.model.usuario.Usuario;
 public class UsuarioFactory {
     
     public Usuario getUsuario(String tipo) {
-        if (tipo.equals(TipoUsuario.ADMINISTRADOR.toString())) {
+        if (TipoUsuario.ADMINISTRADOR.toString().equals(tipo)) {
             return new Administrador();
-        } else if (tipo.equals(TipoUsuario.CLIENTE.toString())) {
+        } else if (TipoUsuario.CLIENTE.toString().equals(tipo)) {
             return new Cliente();
-        } else if (tipo.equals(TipoUsuario.OPERADOR.toString())) {
+        } else if (TipoUsuario.OPERADOR.toString().equals(tipo)) {
             return new Operador();
-        } else if (tipo.equals(TipoUsuario.ENTREGADOR.toString())) {
+        } else if (TipoUsuario.ENTREGADOR.toString().equals(tipo)) {
             return new Entregador();
         } else {
             return null;

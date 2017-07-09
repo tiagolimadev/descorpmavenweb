@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.validation.Valid;
 
 /**
@@ -23,6 +24,7 @@ import javax.validation.Valid;
  */
 @ManagedBean(name = "usuarioBean")
 @LocalBean
+@ViewScoped
 public class UsuarioBean implements Serializable {
     
     @EJB
@@ -32,7 +34,7 @@ public class UsuarioBean implements Serializable {
     private Usuario usuario;
     private UsuarioFactory factory;
     private List<Usuario> listaUsuarios;
-    private TipoUsuario tipoUsuarioSelecionado;
+    private String tipoUsuarioSelecionado;
     private TipoUsuario[] tiposUsuario;
     private int linhas;
     
@@ -40,14 +42,14 @@ public class UsuarioBean implements Serializable {
     public void init() {
         listarUsuarios();
         this.linhas = 10;
-    }
-    
-    public UsuarioBean() {
+        this.tiposUsuario = TipoUsuario.values();
         this.factory = new UsuarioFactory();
     }
     
+//    public UsuarioBean() {}
+    
     public void initUsuario() {
-        usuario = factory.getUsuario(tipoUsuarioSelecionado.toString());
+        usuario = factory.getUsuario(this.tipoUsuarioSelecionado);
     }
     
     public void selecionarUsuario(Usuario usuario) {
@@ -82,7 +84,7 @@ public class UsuarioBean implements Serializable {
     }
 
     public TipoUsuario[] getTiposUsuario() {
-        return TipoUsuario.values();
+        return tiposUsuario;
     }
 
     public void setUsuario(Usuario usuario) {
@@ -97,11 +99,11 @@ public class UsuarioBean implements Serializable {
         this.listaUsuarios = listaUsuarios;
     }
     
-    public TipoUsuario getTipoUsuarioSelecionado() {
+    public String getTipoUsuarioSelecionado() {
         return tipoUsuarioSelecionado;
     }
 
-    public void setTipoUsuarioSelecionado(TipoUsuario tipoUsuarioSelecionado) {
+    public void setTipoUsuarioSelecionado(String tipoUsuarioSelecionado) {
         this.tipoUsuarioSelecionado = tipoUsuarioSelecionado;
     }
 
