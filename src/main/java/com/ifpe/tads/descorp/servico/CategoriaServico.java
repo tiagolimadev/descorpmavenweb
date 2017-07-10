@@ -5,9 +5,13 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import com.ifpe.tads.descorp.model.produto.Categoria;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -27,28 +31,49 @@ import javax.persistence.TypedQuery;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class CategoriaServico {
-    
+
+    @Resource
+    private SessionContext sessao;
+
     @PersistenceContext(name = "descorp", type = PersistenceContextType.TRANSACTION)
     protected EntityManager em;
-    
+
     public void salvar(Categoria categoria) {
-        em.persist(categoria);
-    }
-    
-    public List<Categoria> listar() {
-        TypedQuery<Categoria> query = em.createNamedQuery("Categoria.listarCategorias", Categoria.class);
-        return query.getResultList();
-    }
-    
-    public void atualizar(Categoria categoria) {
-        em.merge(categoria);
-    }
-    
-    public void remover(Categoria categoria) {
-        if (!em.contains(categoria)) {
-            categoria = em.merge(categoria);
+        if(sessao.isCallerInRole(Papel.ADMINISTRADOR)){
+            em.persist(categoria);
+        }else{
+            throw new EJBAccessException();
         }
-        em.remove(categoria);
     }
-    
+
+    public List<Categoria> listar() {
+        if(sessao.isCallerInRole(Papel.OPERADOR)){
+                TypedQuery<Categoria> query = em.createNamedQuery("Categoria.listarCategorias", Categoria.class);
+                return query.getResultList();
+        }else{
+            throw new EJBAccessException();
+        }
+    }
+
+    public void atualizar(Categoria categoria) {
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            em.merge(categoria);
+        } else {
+            throw new EJBAccessException();
+        }
+    }
+
+    public void remover(Categoria categoria) {
+
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+
+            if (!em.contains(categoria)) {
+                categoria = em.merge(categoria);
+            }
+            em.remove(categoria);
+        }else{
+            throw new EJBAccessException();
+        }
+    }
+
 }

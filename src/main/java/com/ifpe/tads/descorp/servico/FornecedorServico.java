@@ -5,9 +5,13 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import com.ifpe.tads.descorp.model.fornecedor.Fornecedor;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,26 +32,46 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class FornecedorServico {
     
+    @Resource
+    private SessionContext sessao;
+    
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager em;
     
     public void salvar(Fornecedor fornecedor) {
-        em.persist(fornecedor);
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
+            em.persist(fornecedor);
+        } else {
+            throw new EJBAccessException();
+        }
     }
     
     public List<Fornecedor> listar() {
-        TypedQuery<Fornecedor> query = em.createNamedQuery("Fornecedor.ListarTodos", Fornecedor.class);
-        return query.getResultList();
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
+            TypedQuery<Fornecedor> query = em.createNamedQuery("Fornecedor.ListarTodos", Fornecedor.class);
+            return query.getResultList();
+        } else {
+            throw new EJBAccessException();
+        }
     }
     
     public void atualizar(Fornecedor fornecedor) {
-        em.merge(fornecedor);
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
+            em.merge(fornecedor);
+        } else {
+            throw new EJBAccessException();
+        }
     }
     
     public void remover(Fornecedor fornecedor) {
-        if (!em.contains(fornecedor)) {
-            fornecedor = em.merge(fornecedor);
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            if (!em.contains(fornecedor)) {
+                fornecedor = em.merge(fornecedor);
+            }
+            em.remove(fornecedor);
+        } else {
+            throw new EJBAccessException();
         }
-        em.remove(fornecedor);
     }
+    
 }

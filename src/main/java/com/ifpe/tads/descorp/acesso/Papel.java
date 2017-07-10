@@ -10,8 +10,8 @@ package com.ifpe.tads.descorp.acesso;
  * @author eduardo.amaral
  */
 public class Papel {
-    private static final String ADMINISTRADOR = "administrador";
-    private static final String CLIENTE = "cliente";
-    private static final String ENTREGADOR = "entregador";
-    private static final String OPERADOR = "operador";
+    public static final String ADMINISTRADOR = "ADMINISTRADOR";
+    public static final String CLIENTE = "CLIENTE";
+    public static final String ENTREGADOR = "ENTREGADOR";
+    public static final String OPERADOR = "OPERADOR";
 }

@@ -5,9 +5,13 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import com.ifpe.tads.descorp.model.usuario.Usuario;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,37 +32,52 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class UsuarioServico {
 
+    @Resource
+    private SessionContext sessao;
+
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager em;
-    
+
     public List<Usuario> getUsuarios() {
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.ListarTodos", Usuario.class);
-        return query.getResultList();
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            TypedQuery<Usuario> query = em.createNamedQuery("Usuario.ListarTodos", Usuario.class);
+            return query.getResultList();
+        } else {
+            throw new EJBAccessException();
+        }
     }
-    
+
     public List<Usuario> getUsuariosPorTipo(String tipo) {
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.PorTipo", Usuario.class);
-        query.setParameter("tipo", tipo);
-        return query.getResultList();
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            TypedQuery<Usuario> query = em.createNamedQuery("Usuario.PorTipo", Usuario.class);
+            query.setParameter("tipo", tipo);
+            return query.getResultList();
+        } else {
+            throw new EJBAccessException();
+        }
     }
-    
+
     public Usuario getUsuarioPorId(Long id) {
         return em.find(Usuario.class, id);
     }
-    
+
     public void salvar(Usuario usuario) {
         em.persist(usuario);
     }
-    
+
     public void atualizar(Usuario usuario) {
         em.merge(usuario);
     }
-    
+
     public void remover(Usuario usuario) {
-        if (!em.contains(usuario)) {
-            usuario = em.merge(usuario);
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            if (!em.contains(usuario)) {
+                usuario = em.merge(usuario);
+            }
+            em.remove(usuario);
+        } else {
+            throw new EJBAccessException();
         }
-        em.remove(usuario);
     }
-    
+
 }

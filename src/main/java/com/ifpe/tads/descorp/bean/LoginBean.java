@@ -5,7 +5,10 @@
  */
 package com.ifpe.tads.descorp.bean;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import java.io.Serializable;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -41,7 +44,11 @@ public class LoginBean implements Serializable {
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             request.login(login, senha);
             facesContext.getExternalContext().getSession(true);
-            retorno = "gerenciarUsuarios";
+            //if(sessionContext.isCallerInRole(Papel.ADMINISTRADOR) || sessionContext.isCallerInRole(Papel.OPERADOR)){
+              //  retorno = "gerenciar-usuario";
+            //}else if(sessionContext.isCallerInRole(Papel.CLIENTE)){
+                retorno = "home-cliente";
+            //}
         } catch (ServletException ex) {
             setLogin(null);
             adicionarMensagem("Login e/ou senha incorretos.");

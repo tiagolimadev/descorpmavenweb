@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-<login-config>
+    <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>saltRealm</realm-name>
         <form-login-config>
@@ -8,6 +8,36 @@
             <form-error-page>/index.xhtml</form-error-page>
         </form-login-config>
     </login-config>
+    <security-constraint>
+        <display-name>Páginas ADM</display-name>
+        <web-resource-collection>
+            <web-resource-name>Área Protegida</web-resource-name>
+            <description>Área Protegida</description>
+            <url-pattern>/adm/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Páginas Cliente</display-name>
+        <web-resource-collection>
+            <web-resource-name>Área Protegida</web-resource-name>
+            <description>Área Protegida</description>
+            <url-pattern>/cliente/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>CLIENTE</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

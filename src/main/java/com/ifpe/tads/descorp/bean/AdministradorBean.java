@@ -6,7 +6,6 @@
 package com.ifpe.tads.descorp.bean;
 
 import com.ifpe.tads.descorp.model.usuario.Usuario;
-import com.ifpe.tads.descorp.servico.AdministradorServico;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,7 +22,7 @@ import javax.faces.bean.SessionScoped;
 public class AdministradorBean implements Serializable {
 
     @EJB
-    private AdministradorServico admServico;
+    private UsuarioBean servico;
     
     private List<Usuario> listaUsuarios;
     private Usuario usuarioSelecionado;
@@ -38,7 +37,7 @@ public class AdministradorBean implements Serializable {
     }
 
     private void atualizarLista(){
-        listaUsuarios = admServico.listarUsuarios();
+        listaUsuarios = servico.getListaUsuarios();
     }
     
     public void initVisualizarUsuario(Usuario usuario){

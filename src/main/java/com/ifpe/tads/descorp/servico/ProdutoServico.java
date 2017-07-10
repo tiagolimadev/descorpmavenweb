@@ -5,9 +5,13 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import com.ifpe.tads.descorp.model.produto.Produto;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -27,28 +31,43 @@ import javax.persistence.TypedQuery;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ProdutoServico {
-    
+
+    @Resource
+    private SessionContext sessao;
+
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;
-    
-    public List<Produto> getProdutos(){
+
+    public List<Produto> getProdutos() {
         TypedQuery<Produto> query = entityManager.createNamedQuery("Produto.Todos", Produto.class);
         return query.getResultList();
     }
-    
+
     public void salvar(Produto produto) {
-       entityManager.persist(produto);
-    }
-    
-    public void atualizar(Produto produto) {
-        entityManager.merge(produto);
-    }
-    
-    public void remover(Produto produto) {
-        if (!entityManager.contains(produto)) {
-            produto = entityManager.merge(produto);
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
+            entityManager.persist(produto);
+        }else{
+            throw new EJBAccessException();
         }
-        entityManager.remove(produto);
     }
-    
+
+    public void atualizar(Produto produto) {
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
+            entityManager.merge(produto);
+        }else{
+            throw new EJBAccessException();
+        }
+    }
+
+    public void remover(Produto produto) {
+        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+            if (!entityManager.contains(produto)) {
+                produto = entityManager.merge(produto);
+            }
+            entityManager.remove(produto);
+        }else{
+            throw new EJBAccessException();
+        }
+    }
+
 }

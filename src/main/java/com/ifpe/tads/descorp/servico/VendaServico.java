@@ -9,7 +9,9 @@ import com.ifpe.tads.descorp.excecao.ExcecaoNegocio;
 import com.ifpe.tads.descorp.model.produto.Produto;
 import com.ifpe.tads.descorp.model.venda.ItemVenda;
 import com.ifpe.tads.descorp.model.venda.Venda;
+import javax.annotation.Resource;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,6 +30,9 @@ import static javax.persistence.PersistenceContextType.TRANSACTION;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class VendaServico {
+    
+    @Resource
+    private SessionContext sessao;
     
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;

@@ -5,10 +5,14 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import com.ifpe.tads.descorp.acesso.Papel;
 import com.ifpe.tads.descorp.model.usuario.Cliente;
 import com.ifpe.tads.descorp.model.venda.Venda;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,16 +32,25 @@ import javax.persistence.TypedQuery;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ClienteServico {
-    
+
+    @Resource
+    private SessionContext sessao;
+
     @PersistenceContext(name = "descorp", type = TRANSACTION)
     protected EntityManager entityManager;
-    
-    public List<Venda> getHistorico(Cliente cliente){
-        
-        TypedQuery<Venda> queryVendas = entityManager.createNamedQuery("Venda.PorCliente", Venda.class);
-        queryVendas.setParameter("clienteId", cliente.getId());
-        
-        return queryVendas.getResultList();
+
+    public List<Venda> getHistorico(Cliente cliente) {
+
+        if (sessao.isCallerInRole(Papel.CLIENTE)) {
+
+            TypedQuery<Venda> queryVendas = entityManager.createNamedQuery("Venda.PorCliente", Venda.class);
+            queryVendas.setParameter("clienteId", cliente.getId());
+
+            return queryVendas.getResultList();
+
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
 }
