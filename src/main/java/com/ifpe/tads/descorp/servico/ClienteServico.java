@@ -6,10 +6,13 @@
 package com.ifpe.tads.descorp.servico;
 
 import com.ifpe.tads.descorp.acesso.Papel;
+import static com.ifpe.tads.descorp.acesso.Papel.CLIENTE;
 import com.ifpe.tads.descorp.model.usuario.Cliente;
+import static com.ifpe.tads.descorp.model.usuario.TipoUsuario.ADMINISTRADOR;
 import com.ifpe.tads.descorp.model.venda.Venda;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
@@ -29,6 +32,7 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 @LocalBean
+@DeclareRoles({CLIENTE})
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ClienteServico {

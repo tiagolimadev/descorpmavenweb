@@ -8,9 +8,9 @@ and open the template in the editor.
     Author     : Eduardo
 */
 
-input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
-    height: 2rem;
-    margin: 0;
+.card-input {
+    height: 2rem !important;
+    margin: 0 !important;
 }
 
 .col.s6, .col.s5{
@@ -23,4 +23,14 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
 
 .auto-margin{
     margin: auto;
+}
+
+.menu-li{
+    display: block !important;
+    width: 100% !important;
+}
+
+.menu-usr-nome{
+    width: 100%;
+    text-align: center;
 }

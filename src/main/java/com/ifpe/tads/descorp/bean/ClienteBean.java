@@ -23,6 +23,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.Valid;
 
 /**
@@ -61,7 +62,7 @@ public class ClienteBean extends BasicBean implements Serializable {
     
     @PostConstruct
     public void init(){
-        cliente = (Cliente) usuarioServico.getUsuarioPorId(1L);
+        cliente = (Cliente) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
     }
     
     public ClienteBean() {}

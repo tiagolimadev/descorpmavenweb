@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -68,8 +69,8 @@ import org.hibernate.validator.constraints.br.CPF;
                     query = "SELECT u FROM Usuario u WHERE u.email = :email"
             ),
             @NamedQuery(
-                    name = "Usuario.fazerLogin",
-                    query = "SELECT u FROM Usuario u WHERE u.login = :login and u.senha = :senha"
+                    name = "Usuario.PorLogin",
+                    query = "SELECT u FROM Usuario u WHERE u.login = :login"
             ),
             @NamedQuery(
                     name = "Usuario.PorTipo",
@@ -96,7 +97,7 @@ public abstract class Usuario implements Serializable {
     @Email(message = "{usuario.email.invalido}")
     @NotBlank(message = "{usuario.email.obrigatorio}")
     @Size(max = 100)
-    @Column(name = "TXT_EMAIL")
+    @Column(name = "TXT_EMAIL", unique = true)
     private String email;
 
     @NotBlank(message = "{usuario.login.obrigatorio}")
@@ -136,7 +137,7 @@ public abstract class Usuario implements Serializable {
     @Column(name = "TXT_TIPO_USUARIO")
     private TipoUsuario tipo;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "TB_USUARIO_GRUPO", joinColumns = {
         @JoinColumn(name = "ID_USUARIO")},
             inverseJoinColumns = {

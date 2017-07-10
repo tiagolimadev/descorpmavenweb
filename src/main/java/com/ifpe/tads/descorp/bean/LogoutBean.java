@@ -5,6 +5,7 @@
  */
 package com.ifpe.tads.descorp.bean;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 @ManagedBean(name = "logoutBean")
 @ViewScoped
-public class LogoutBean {
+public class LogoutBean implements Serializable {
     
     public String logout() throws ServletException {
         

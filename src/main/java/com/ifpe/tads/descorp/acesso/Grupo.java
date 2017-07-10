@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -18,16 +20,17 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "TB_GRUPO")
+@NamedQueries(
+    {
+        @NamedQuery(name = "Grupo.PorNome", query = "SELECT G FROM Grupo G WHERE g.nome = :grupo_nome")
+
+    }
+)
 public class Grupo implements Serializable {
 
-    private static final String ADMINISTRADOR = "adm";
-    private static final String CLIENTE = "clt";
-    private static final String ENTREGADOR = "etg";
-    private static final String OPERADOR = "opr";
-    
     @Id
     private Long id;
-    
+
     @NotBlank
     @Column(name = "TXT_NOME", unique = true)
     private String nome;
@@ -47,5 +50,5 @@ public class Grupo implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
 }

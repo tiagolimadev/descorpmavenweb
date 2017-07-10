@@ -5,11 +5,15 @@
  */
 package com.ifpe.tads.descorp.servico;
 
+import static com.ifpe.tads.descorp.acesso.Papel.ADMINISTRADOR;
+import static com.ifpe.tads.descorp.acesso.Papel.CLIENTE;
+import static com.ifpe.tads.descorp.acesso.Papel.OPERADOR;
 import com.ifpe.tads.descorp.excecao.ExcecaoNegocio;
 import com.ifpe.tads.descorp.model.produto.Produto;
 import com.ifpe.tads.descorp.model.venda.ItemVenda;
 import com.ifpe.tads.descorp.model.venda.Venda;
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -27,6 +31,7 @@ import static javax.persistence.PersistenceContextType.TRANSACTION;
  */
 @LocalBean
 @Stateless
+@DeclareRoles({ADMINISTRADOR,CLIENTE,OPERADOR})
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class VendaServico {

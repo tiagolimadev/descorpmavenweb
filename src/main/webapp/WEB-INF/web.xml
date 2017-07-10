@@ -24,6 +24,21 @@
         </user-data-constraint>
     </security-constraint>
     <security-constraint>
+        <display-name>Páginas ADM</display-name>
+        <web-resource-collection>
+            <web-resource-name>Área Protegida</web-resource-name>
+            <description>Área Protegida</description>
+            <url-pattern>/adm/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>OPERADOR</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
         <display-name>Páginas Cliente</display-name>
         <web-resource-collection>
             <web-resource-name>Área Protegida</web-resource-name>
@@ -96,6 +111,10 @@
         <error-code>404</error-code>
         <location>/error/404.xhtml</location>
     </error-page>
+    <error-page>
+        <exception-type>javax.ejb.EJBAccessException</exception-type>
+        <location>/error/403.xhtml</location>
+    </error-page> 
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>

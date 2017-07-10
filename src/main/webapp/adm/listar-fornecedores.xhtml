@@ -6,6 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/layout/template.xhtml">
+    <ui:define name="menu-esquerdo">
+        <ui:include src="/adm/menu-adm.xhtml" />
+    </ui:define>
     <ui:define name="conteudo">
 
         <h:form id="listaFornecedoresForm">
@@ -25,7 +28,7 @@
                              rows="#{fornecedorBean.linhas}">
                     <f:facet name="header">
                         <p:panelGrid>
-                            #{translate.label_user_list}
+                            Lista de Fornecedores
                             <p:commandButton id="toggler" type="button" value="#{translate.label_columns}" style="float:right" icon="ui-icon-calculator" />
                             <p:columnToggler datasource="listaFornecedores" trigger="toggler" />
                         </p:panelGrid>

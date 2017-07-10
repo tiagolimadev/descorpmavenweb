@@ -36,7 +36,7 @@ public class CadastroBean implements Serializable{
     
     public CadastroBean() {
         this.cliente = new Cliente();;
-        this.cliente.setTipo(TipoUsuario.CLIENTE);
+        this.cliente.setTipo(TipoUsuario.ADMINISTRADOR);
     
     }
     

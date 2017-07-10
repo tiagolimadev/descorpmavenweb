@@ -18,37 +18,40 @@
                 <div class="col s6 m4 auto-margin">
                     <div class="card">
                         <div class="card-content">
+                            
+                            <h3 style="margin-top: 0">Cadastro</h3>
+                            
                             <div class="row">
                                 <h:outputLabel for="nome">Nome</h:outputLabel>
-                                <p:inputText id="nome" type="text" label="nome" value="#{cadastroBean.cliente.nome}" />
+                                <p:inputText id="nome" type="text" label="nome" value="#{cadastroBean.cliente.nome}" styleClass="card-input" />
                             </div>
                             <div class="row">
                                 <h:outputLabel for="email">Email</h:outputLabel>
-                                <p:inputText id="email" type="email" label="email" value="#{cadastroBean.cliente.email}" />
+                                <p:inputText id="email" type="email" label="email" value="#{cadastroBean.cliente.email}" styleClass="card-input" />
                             </div>
                             <div class="row">
                                 <div class="col s5">
                                     <h:outputLabel for="cpf">CPF</h:outputLabel>
-                                    <p:inputMask id="cpf" mask="999.999.999-99" label="cpf" value="#{cadastroBean.cliente.cpf}" />
+                                    <p:inputMask id="cpf" mask="999.999.999-99" label="cpf" value="#{cadastroBean.cliente.cpf}" styleClass="card-input" />
                                 </div>
                                 <div class="col offset-s1 s6">
                                     <h:outputLabel for="dataNasc">Data Nasc.:</h:outputLabel>
-                                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}">
+                                    <p:inputText id="dataNasc" type="date" label="dataNasc" value="#{cadastroBean.cliente.dataNascimento}" styleClass="card-input">
                                         <f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" timeZone="America/Sao_Paulo" />
                                     </p:inputText>
                                 </div>
                             </div>
                             <div class="row">
                                 <h:outputLabel for="login">Login</h:outputLabel>
-                                <p:inputText id="login" type="text" label="login" value="#{cadastroBean.cliente.login}" />
+                                <p:inputText id="login" type="text" label="login" value="#{cadastroBean.cliente.login}" styleClass="card-input" />
                             </div>
                             <div class="row">
                                 <h:outputLabel for="senha">Senha</h:outputLabel>
-                                <p:password id="senha" label="senha" value="#{cadastroBean.cliente.senha}"></p:password>
+                                <p:password id="senha" label="senha" value="#{cadastroBean.cliente.senha}" styleClass="card-input"></p:password>
                             </div>
                             <div class="row">
                                 <h:outputLabel for="csenha">Confirmar Senha</h:outputLabel>
-                                <p:password id="csenha" label="csenha" value="#{cadastroBean.confirmacaoSenha}"></p:password>
+                                <p:password id="csenha" label="csenha" value="#{cadastroBean.confirmacaoSenha}" styleClass="card-input"></p:password>
                             </div>
                             <p:commandButton action="#{cadastroBean.cadastrarCliente()}" value="Salvar" ajax="false" validateClient="true" />
                             <p:commandButton action="login" immediate="true" value="Cancelar" />

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form id="menuClienteForm">
+        <div class="menu-usr-nome">
+            Bem-vindo<br />
+            <h:outputText value="#{clienteBean.cliente.nome}" />
+        </div>
+        <hr />
+        <ul class="nav nav-pills nav-stacked">
+            <li><p:commandButton value="Home" icon="fa fa-fw fa-home" action="home-cliente" styleClass="menu-li" /></li>
+            <li><p:commandButton value="Nova Compra" action="#{clienteBean.initNovaCompra()}" styleClass="menu-li" icon="fa fa-fw fa-shopping-cart" /></li>
+            <li><p:commandButton value="Histórico de Compras" action="#{clienteBean.initHistorico()}" styleClass="menu-li" icon="fa fa-fw fa-history" /></li>
+            <li><p:commandButton value="Editar Perfil" action="editar-perfil" styleClass="menu-li" icon="fa fa-fw fa-user" /></li>
+            <li><p:commandButton action="#{logoutBean.logout()}" value="#{translate.label_logout}" icon="fa fa-fw fa-sign-out" styleClass="menu-li" /></li>
+        </ul>
+    </h:form>
+
+</html>
