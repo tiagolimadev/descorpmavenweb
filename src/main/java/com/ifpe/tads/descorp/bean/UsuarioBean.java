@@ -38,6 +38,8 @@ public class UsuarioBean implements Serializable {
     private TipoUsuario[] tiposUsuario;
     private int linhas;
     
+    private String novaSenha;
+    
     @PostConstruct
     public void init() {
         listarUsuarios();
@@ -72,6 +74,10 @@ public class UsuarioBean implements Serializable {
     }
     
     public void atualizarUsuario() {
+        if(novaSenha != null && !novaSenha.isEmpty()){
+            usuario.setSenha(novaSenha);
+        }
+        
         usuarioServico.atualizar(this.usuario);
         listarUsuarios();
     }
@@ -114,6 +120,14 @@ public class UsuarioBean implements Serializable {
 
     public void setLinhas(int linhas) {
         this.linhas = linhas;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
     }
     
 }

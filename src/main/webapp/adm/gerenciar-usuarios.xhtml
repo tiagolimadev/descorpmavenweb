@@ -130,7 +130,7 @@
                 </div>
                 <div class="row">
                     <h:outputLabel for="senhaEdit">#{translate.label_password}</h:outputLabel>
-                    <p:password id="senhaEdit" label="senhaEdit" value="#{usuarioBean.usuario.senha}"  feedback="true"
+                    <p:password id="senhaEdit" label="senhaEdit" value="#{usuarioBean.novaSenha}"  feedback="true"
                                 promptLabel="#{translate.label_prompt_password}" weakLabel="#{translate.label_weak_password}" goodLabel="#{translate.label_good_password}" strongLabel="#{translate.label_strong_password}"></p:password>
                 </div>
                 <p:commandButton actionListener="#{usuarioBean.atualizarUsuario()}" oncomplete="PF('dlgEditUsuario').hide();" value="#{translate.label_update}" icon="fa fa-fw fa-edit" update="listaUsuariosForm" process="@form" />
