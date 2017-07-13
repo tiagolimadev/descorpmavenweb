@@ -35,8 +35,8 @@ public class CadastroBean implements Serializable{
     private String confirmacaoSenha;
     
     public CadastroBean() {
-        this.cliente = new Cliente();;
-        this.cliente.setTipo(TipoUsuario.ADMINISTRADOR);
+        this.cliente = new Cliente();
+        this.cliente.setTipo(TipoUsuario.CLIENTE);
     
     }
     

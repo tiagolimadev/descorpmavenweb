@@ -5,10 +5,13 @@
  */
 package com.ifpe.tads.descorp.acesso;
 
+import com.ifpe.tads.descorp.model.usuario.Usuario;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,6 +37,9 @@ public class Grupo implements Serializable {
     @NotBlank
     @Column(name = "TXT_NOME", unique = true)
     private String nome;
+    
+    @ManyToMany(mappedBy = "grupos")
+    private List<Usuario> usuarios;
 
     public String getNome() {
         return nome;
@@ -51,4 +57,12 @@ public class Grupo implements Serializable {
         this.id = id;
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
 }

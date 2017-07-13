@@ -17,7 +17,7 @@
             
             <!-- Button Add Categoria -->
             <p:panelGrid id="addCat">
-                <p:commandButton action="#{categoriaBean.initCategoria()}" oncomplete="PF('dlgCadCat').show();" icon="fa fa-fw fa-plus" value="Nova Categoria" update="formCadastrar" immediate="true" />
+                <p:commandButton action="#{categoriaBean.initCategoria()}" oncomplete="PF('dlgCadCat').show();" icon="fa fa-fw fa-plus" value="#{translate.label_new_category}" update="formCadastrar" immediate="true" />
             </p:panelGrid>
 
             <!-- Form Datatable -->
@@ -26,12 +26,12 @@
                 <p:dataTable id="listaCategorias" value="#{categoriaBean.listaCategorias}" var="categoria" rowKey="#{categoria.id}"
                              paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              rows="#{categoriaBean.linhas}">
-                    <p:column headerText="Nome" sortBy="#{categoria.nome}">
+                    <p:column headerText="#{translate.label_name}" sortBy="#{categoria.nome}">
                         <h:outputText value="#{categoria.nome}" />
                     </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('dlgEditCat').show();" value="Editar" icon="fa fa-fw fa-edit" update="atualizarForm" />
-                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('confRemCat').show();" value="Remover" icon="fa fa-fw fa-remove" />
+                    <p:column headerText="#{translate.label_actions}">
+                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('dlgEditCat').show();" value="#{translate.label_edit}" icon="fa fa-fw fa-edit" update="atualizarForm" />
+                        <p:commandButton action="#{categoriaBean.selecionarCategoria(categoria)}" oncomplete="PF('confRemCat').show();" value="#{translate.label_delete}" icon="fa fa-fw fa-remove" />
                     </p:column>
                 </p:dataTable>
 
@@ -40,36 +40,36 @@
 
         <h:form id="formCadastrar">
             <!-- Dialog Cadastrar Categoria -->
-            <p:dialog header="Cadastrar Categoria" widgetVar="dlgCadCat" closeOnEscape="true" resizable="false">
+            <p:dialog header="#{translate.label_new_category}" widgetVar="dlgCadCat" closeOnEscape="true" resizable="false">
 
                 <div class="row">
-                    <p:outputLabel value="Nome" for="nomeCad"/>
+                    <p:outputLabel value="#{translate.label_name}" for="nomeCad"/>
                     <p:inputText id="nomeCad" type="text" label="nomeCad" value="#{categoriaBean.categoria.nome}" />
                 </div>
 
-                <p:commandButton action="#{categoriaBean.cadastrarCategoria()}" oncomplete="PF('dlgCadCat').hide();" value="Cadastrar" icon="fa fa-fw fa-save" update="listaCategoriasForm" />
-                <p:commandButton value="Cancelar" onclick="PF('dlgCadCat').hide();" type="button" />
+                <p:commandButton action="#{categoriaBean.cadastrarCategoria()}" oncomplete="PF('dlgCadCat').hide();" value="#{translate.label_register}" icon="fa fa-fw fa-save" update="listaCategoriasForm" />
+                <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgCadCat').hide();" type="button" />
             </p:dialog>
         </h:form>
 
         <h:form id="atualizarForm">
             <!-- Dialog Editar Categoria -->
-            <p:dialog header="Editar Categoria" widgetVar="dlgEditCat" closeOnEscape="true" resizable="false">
+            <p:dialog header="#{translate.label_edit_category}" widgetVar="dlgEditCat" closeOnEscape="true" resizable="false">
                 <div class="row">
-                    <p:outputLabel value="Nome" for="nomeEdit"/>
+                    <p:outputLabel value="#{translate.label_name}" for="nomeEdit"/>
                     <p:inputText id="nomeEdit" type="text" label="nomeEdit" value="#{categoriaBean.categoria.nome}" />
                 </div>
-                <p:commandButton action="#{categoriaBean.atualizarCategoria()}" oncomplete="PF('dlgEditCat').hide();" value="Atualizar" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
-                <p:commandButton value="Cancelar" onclick="PF('dlgEditCat').hide();" type="button" />
+                <p:commandButton action="#{categoriaBean.atualizarCategoria()}" oncomplete="PF('dlgEditCat').hide();" value="#{translate.label_update}" icon="fa fa-fw fa-edit" update="listaCategoriasForm" />
+                <p:commandButton value="#{translate.label_cancel}" onclick="PF('dlgEditCat').hide();" type="button" />
             </p:dialog>
         </h:form>
         <h:form id="removerForm">
             <!-- ConfirmDialog Remoção de Categoria -->
-            <p:confirmDialog message="Tem certeza que deseja remover a categoria?"
-                             header="Confirmação de Remoção de Categoria" severity="alert"
+            <p:confirmDialog message="#{translate.label_confirm_remove_category}"
+                             header="#{translate.label_header_remove_category}" severity="alert"
                              widgetVar="confRemCat" closeOnEscape="true">
-                <p:commandButton value="Sim" action="#{categoriaBean.removerCategoria()}" oncomplete="PF('confRemCat').hide()" update="listaCategoriasForm" />
-                <p:commandButton value="Não" onclick="PF('confRemCat').hide();" type="button" />
+                <p:commandButton value="#{translate.label_yes}" action="#{categoriaBean.removerCategoria()}" oncomplete="PF('confRemCat').hide()" update="listaCategoriasForm" />
+                <p:commandButton value="#{translate.label_no}" onclick="PF('confRemCat').hide();" type="button" />
             </p:confirmDialog>
         </h:form>
 
