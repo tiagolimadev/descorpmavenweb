@@ -13,9 +13,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.Valid;
 
 /**
@@ -57,7 +60,12 @@ public class UsuarioBean implements Serializable {
     }
     
     public void listarUsuarios() {
-        this.listaUsuarios = usuarioServico.getUsuarios();
+        try{
+            this.listaUsuarios = usuarioServico.getUsuarios();
+        }catch(EJBAccessException e){
+            this.listaUsuarios = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Autorização negada."));
+        }
     }
     
     public void cadastrarUsuario() {

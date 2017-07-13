@@ -33,6 +33,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -144,6 +145,7 @@ public abstract class Usuario implements Serializable {
                 @JoinColumn(name = "ID_GRUPO")})
     private List<Grupo> grupos;
     
+    @PreUpdate
     @PrePersist
     public void gerarHash() {
         try {

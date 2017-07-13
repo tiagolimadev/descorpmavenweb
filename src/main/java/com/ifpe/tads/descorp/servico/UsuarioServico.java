@@ -50,7 +50,7 @@ public class UsuarioServico {
     protected EntityManager em;
     
     public List<Usuario> getUsuarios() {
-        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
             TypedQuery<Usuario> query = em.createNamedQuery("Usuario.ListarTodos", Usuario.class);
             return query.getResultList();
         } else {
@@ -59,7 +59,7 @@ public class UsuarioServico {
     }
     
     public List<Usuario> getUsuariosPorTipo(String tipo) {
-        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
             TypedQuery<Usuario> query = em.createNamedQuery("Usuario.PorTipo", Usuario.class);
             query.setParameter("tipo", tipo);
             return query.getResultList();
@@ -121,7 +121,18 @@ public class UsuarioServico {
     }
     
     public void atualizar(Usuario usuario) {
+        boolean adm = false;
+        
         em.merge(usuario);
+        
+        if (!(usuario instanceof Cliente)) {
+            adm = true;
+        }
+        
+        if(adm && !sessao.isCallerInRole(Papel.ADMINISTRADOR)){
+            throw new EJBAccessException("É necessário perfil de ADM para alterar esse usuário.");
+        }
+        
     }
     
     public void remover(Usuario usuario) {

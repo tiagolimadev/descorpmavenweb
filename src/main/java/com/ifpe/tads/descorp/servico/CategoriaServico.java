@@ -44,7 +44,7 @@ public class CategoriaServico {
     protected EntityManager em;
 
     public void salvar(Categoria categoria) {
-        if(sessao.isCallerInRole(Papel.ADMINISTRADOR)){
+        if(sessao.isCallerInRole(Papel.OPERADOR)){
             em.persist(categoria);
         }else{
             throw new EJBAccessException();
@@ -61,7 +61,7 @@ public class CategoriaServico {
     }
 
     public void atualizar(Categoria categoria) {
-        if (sessao.isCallerInRole(Papel.ADMINISTRADOR)) {
+        if (sessao.isCallerInRole(Papel.OPERADOR)) {
             em.merge(categoria);
         } else {
             throw new EJBAccessException();
