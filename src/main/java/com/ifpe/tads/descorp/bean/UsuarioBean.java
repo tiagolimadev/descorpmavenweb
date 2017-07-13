@@ -50,6 +50,7 @@ public class UsuarioBean implements Serializable {
     
     public void initUsuario() {
         usuario = factory.getUsuario(this.tipoUsuarioSelecionado);
+        usuario.setTipo(TipoUsuario.valueOf(this.tipoUsuarioSelecionado));
     }
     
     public void selecionarUsuario(Usuario usuario) {

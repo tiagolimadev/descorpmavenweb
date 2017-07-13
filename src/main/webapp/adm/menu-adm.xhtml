@@ -8,16 +8,15 @@
 
     <h:form id="menuAdmForm">
         <div class="menu-usr-nome">
-            Bem-vindo<br />
-
+            #{translate.label_welcome}<br />
         </div>
         <hr />
         <ul class="nav nav-pills nav-stacked">
-            <li><p:commandButton value="Home" action="home-adm" icon="fa fa-fw fa-home" styleClass="menu-li" /></li>
-            <li><p:commandButton value="Categorias" action="listarCategorias" icon="fa fa-fw fa-tags" styleClass="menu-li"/></li>
-            <li><p:commandButton value="Fornecedores" action="listarFornecedores" icon="fa fa-fw fa-truck" styleClass="menu-li"/></li>
-            <li><p:commandButton value="Produtos" action="listarProdutos" icon="fa fa-fw fa-dropbox" styleClass="menu-li"/></li>
-            <li><p:commandButton value="Usuários" action="gerenciarUsuarios" icon="fa fa-fw fa-users" styleClass="menu-li"/></li>
+            <li><p:commandButton value="#{translate.label_home}" action="home-adm" icon="fa fa-fw fa-home" styleClass="menu-li" /></li>
+            <li><p:commandButton value="#{translate.label_categories}" action="listarCategorias" icon="fa fa-fw fa-tags" styleClass="menu-li"/></li>
+            <li><p:commandButton value="#{translate.label_supplier}" action="listarFornecedores" icon="fa fa-fw fa-truck" styleClass="menu-li"/></li>
+            <li><p:commandButton value="#{translate.label_products}" action="listarProdutos" icon="fa fa-fw fa-dropbox" styleClass="menu-li"/></li>
+            <li><p:commandButton value="#{translate.label_users}" action="gerenciarUsuarios" icon="fa fa-fw fa-users" styleClass="menu-li"/></li>
             <li><p:commandButton action="#{logoutBean.logout()}" value="#{translate.label_logout}" icon="fa fa-fw fa-sign-out" styleClass="menu-li" /></li>
         </ul>
     </h:form>

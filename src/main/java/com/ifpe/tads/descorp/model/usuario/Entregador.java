@@ -24,6 +24,11 @@ public class Entregador extends Usuario implements Serializable {
     @OneToMany(mappedBy = "entregador", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Entrega> entregas;
+    
+    public Entregador() {
+        super();
+        super.setTipo(TipoUsuario.ENTREGADOR);
+    }
 
     public List<Entrega> getEntregas() {
         return entregas;
